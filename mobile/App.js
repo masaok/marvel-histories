@@ -8,7 +8,9 @@ import ApolloClient from 'apollo-boost';
 import { gql } from 'apollo-boost';
 
 // TODO: when user taps "Like", that data should be saved locally in JSON
-// TODO:
+
+// TODO: Allow multiple Likes
+// TODO: https://www.apollographql.com/docs/link/links/state#write-query
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
@@ -19,7 +21,8 @@ const client = new ApolloClient({
       likedCharacter: {
         id: null,
         __typename: 'Character'
-      }
+      },
+      likedCharacters: []
     },
     resolvers: {
       Mutation: {
@@ -30,6 +33,28 @@ const client = new ApolloClient({
         addLike: (_, { character }, { cache }) => {
           cache.writeData({ data: { likedCharacter: character } });
           return null;
+        },
+        addMultiLike: (_, { character }, { cache }) => {
+          const query = gql`
+            query GetLikedCharacters {
+              likedCharacters @client {
+                id
+              }
+            }
+          `;
+          const previous = cache.readQuery({ query });
+          // const newLikedCharacter = {
+          //   id: character.id,
+          //   __typename: 'Character'
+          // };
+          character.__typename = 'Character'; // must give typename (Apollo client thing)
+          const data = {
+            likedCharacters: previous.likedCharacters.concat([character])
+          };
+
+          // you can also do cache.writeData({ data }) here if you prefer
+          cache.writeQuery({ query, data });
+          return data;
         }
       }
     }
@@ -116,7 +141,7 @@ export default class App extends React.Component {
                         <Query
                           query={gql`
                             {
-                              likedCharacter @client {
+                              likedCharacters @client {
                                 id
                               }
                             }
@@ -124,31 +149,45 @@ export default class App extends React.Component {
                         >
                           {({ loading, data, error }) => {
                             console.log('LIKE CONSOLE');
-                            console.log(data && data.likedCharacter);
+                            console.log(data && data.likedCharacters);
 
                             return (
                               <Mutation
                                 mutation={gql`
                                   mutation ADD_LIKE($character: Character!) {
-                                    addLike(character: $character) @client
+                                    addMultiLike(character: $character) @client
                                   }
                                 `}
                               >
-                                {addLike => {
+                                {addMultiLike => {
+                                  console.log('HELLO');
+                                  if (data) {
+                                    console.log(data.likedCharacters);
+                                  }
                                   return (
                                     <Button
                                       onPress={() =>
-                                        addLike({
+                                        addMultiLike({
                                           variables: { character: item }
                                         })
                                       }
-                                      title={
-                                        data &&
-                                        data.likedCharacter &&
-                                        item.id === data.likedCharacter.id // TODO: compare ID's
-                                          ? 'Unlike'
-                                          : 'Like'
-                                      }
+                                      title={(() => {
+                                        let exists = false;
+                                        for (
+                                          let i = 0;
+                                          i < data.likedCharacters.length;
+                                          i++
+                                        ) {
+                                          if (
+                                            data.likedCharacters[i].id ===
+                                            item.id
+                                          ) {
+                                            exists = true;
+                                            break;
+                                          }
+                                        }
+                                        return exists ? 'Unlike' : 'Like';
+                                      })()}
                                       color='#841584'
                                       accessibilityLabel='Learn more about this button'
                                     />
