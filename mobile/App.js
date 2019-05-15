@@ -16,7 +16,10 @@ const client = new ApolloClient({
     defaults: {
       isConnected: true,
       // likes: [] // character ID's liked by the user
-      likedCharacter: null
+      likedCharacter: {
+        id: null,
+        __typename: 'Character'
+      }
     },
     resolvers: {
       Mutation: {
@@ -110,12 +113,51 @@ export default class App extends React.Component {
                           }}
                         />
                         <Text style={styles.name}>{item.name}</Text>
-                        <Button
-                          onPress={() => {}}
-                          title='Like'
-                          color='#841584'
-                          accessibilityLabel='Learn more about this button'
-                        />
+                        <Query
+                          query={gql`
+                            {
+                              likedCharacter @client {
+                                id
+                              }
+                            }
+                          `}
+                        >
+                          {({ loading, data, error }) => {
+                            console.log('LIKE CONSOLE');
+                            console.log(data && data.likedCharacter);
+
+                            return (
+                              <Mutation
+                                mutation={gql`
+                                  mutation ADD_LIKE($character: Character!) {
+                                    addLike(character: $character) @client
+                                  }
+                                `}
+                              >
+                                {addLike => {
+                                  return (
+                                    <Button
+                                      onPress={() =>
+                                        addLike({
+                                          variables: { character: item }
+                                        })
+                                      }
+                                      title={
+                                        data &&
+                                        data.likedCharacter &&
+                                        item.id === data.likedCharacter.id // TODO: compare ID's
+                                          ? 'Unlike'
+                                          : 'Like'
+                                      }
+                                      color='#841584'
+                                      accessibilityLabel='Learn more about this button'
+                                    />
+                                  );
+                                }}
+                              </Mutation>
+                            );
+                          }}
+                        </Query>
                       </View>
                     );
                   }}
