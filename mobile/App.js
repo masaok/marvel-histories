@@ -51,15 +51,32 @@ const client = new ApolloClient({
           });
           console.log('EXISTS: ' + exists);
 
+          let likedCharacters = previous.likedCharacters;
+
+          const index = likedCharacters
+            .map(item => item.id)
+            .indexOf(character.id);
+
+          if (index < 0) {
+            console.log('CONCATTING ...');
+            likedCharacters = likedCharacters.concat([character]);
+            console.log(likedCharacters);
+          } else {
+            console.log('SPLICING ...');
+            likedCharacters.splice(index, 1);
+            console.log(likedCharacters);
+          }
+
+          console.log('INDEX: ' + index);
+
           character.__typename = 'Character'; // must give typename (Apollo client thing)
           const data = {
-            likedCharacters: previous.likedCharacters.concat([character])
+            likedCharacters
           };
 
           // you can also do cache.writeData({ data }) here if you prefer
-          if (!exists) {
-            cache.writeQuery({ query, data });
-          }
+          cache.writeQuery({ query, data });
+
           return data;
         }
       }
@@ -166,7 +183,7 @@ export default class App extends React.Component {
                                 `}
                               >
                                 {addMultiLike => {
-                                  console.log('HELLO');
+                                  console.log('ADD MULTI LIKE MUTATION');
                                   if (data) {
                                     console.log(data.likedCharacters);
                                   }
@@ -177,23 +194,13 @@ export default class App extends React.Component {
                                           variables: { character: item }
                                         })
                                       }
-                                      title={(() => {
-                                        let exists = false;
-                                        for (
-                                          let i = 0;
-                                          i < data.likedCharacters.length;
-                                          i++
-                                        ) {
-                                          if (
-                                            data.likedCharacters[i].id ===
-                                            item.id
-                                          ) {
-                                            exists = true;
-                                            break;
-                                          }
-                                        }
-                                        return exists ? 'Unlike' : 'Like';
-                                      })()}
+                                      title={
+                                        data.likedCharacters
+                                          .map(char => char.id)
+                                          .indexOf(item.id) > -1
+                                          ? 'Unlike'
+                                          : 'Like'
+                                      }
                                       color='#841584'
                                       accessibilityLabel='Learn more about this button'
                                     />
