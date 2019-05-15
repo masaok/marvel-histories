@@ -39,15 +39,22 @@ export default class App extends React.Component {
             return data.characters.map(character => (
               <View style={styles.container}>
                 <Text>
-                  {character.name}, {character.thumbnail}
+                  {character.name}
                 </Text>
-                <Image
+                {/* <Image
                   style={{ width: 620, height: 413 }}
                   source={{
                     uri:
                       'https://images.immediate.co.uk/volatile/sites/3/2018/03/DTT4430_v707.1023-61174bd.jpg?quality=90&resize=620,413'
                   }}
-                />
+                />     */}
+                <Image
+                style={{ width: 50, height: 50 }}
+                source={{
+                  uri: character.thumbnail
+                    
+                }}
+              />
               </View>
             ));
           }}
