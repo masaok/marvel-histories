@@ -1,11 +1,11 @@
-import React from "react";
-import { Button, Image, FlatList, StyleSheet, Text, View } from "react-native";
+import React from './node_modules/react';
+import { Button, Image, FlatList, StyleSheet, Text, View } from 'react-native';
 
-import { ApolloProvider, Query, Mutation } from "react-apollo";
+import { ApolloProvider, Query, Mutation } from './node_modules/react-apollo';
 
-import ApolloClient from "apollo-boost";
+import ApolloClient from './node_modules/apollo-boost';
 
-import { gql } from "apollo-boost";
+import { gql } from './node_modules/apollo-boost';
 
 // TODO: when user taps "Like", that data should be saved locally in JSON
 
@@ -13,16 +13,16 @@ import { gql } from "apollo-boost";
 // TODO: https://www.apollographql.com/docs/link/links/state#write-query
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
+  uri: 'http://localhost:4000/graphql',
   clientState: {
     defaults: {
       isConnected: true,
       // likes: [] // character ID's liked by the user
       likedCharacter: {
         id: null,
-        __typename: "Character"
+        __typename: 'Character',
       },
-      likedCharacters: []
+      likedCharacters: [],
     },
     resolvers: {
       Mutation: {
@@ -44,12 +44,12 @@ const client = new ApolloClient({
           `;
           const previous = cache.readQuery({ query });
 
-          console.log("CHECKING EXISTENCE");
+          console.log('CHECKING EXISTENCE');
           console.log(character);
           const exists = previous.likedCharacters.some(item => {
             return item.id === character.id;
           });
-          console.log("EXISTS: " + exists);
+          console.log('EXISTS: ' + exists);
 
           let likedCharacters = previous.likedCharacters;
 
@@ -58,61 +58,61 @@ const client = new ApolloClient({
             .indexOf(character.id);
 
           if (index < 0) {
-            console.log("CONCATTING ...");
+            console.log('CONCATTING ...');
             likedCharacters = likedCharacters.concat([character]);
             console.log(likedCharacters);
           } else {
-            console.log("SPLICING ...");
+            console.log('SPLICING ...');
             likedCharacters.splice(index, 1);
             console.log(likedCharacters);
           }
 
-          console.log("INDEX: " + index);
+          console.log('INDEX: ' + index);
 
-          character.__typename = "Character"; // must give typename (Apollo client thing)
+          character.__typename = 'Character'; // must give typename (Apollo client thing)
           const data = {
-            likedCharacters
+            likedCharacters,
           };
 
           // you can also do cache.writeData({ data }) here if you prefer
           cache.writeQuery({ query, data });
 
           return data;
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 });
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   row: {
     flex: 1,
-    alignSelf: "stretch",
-    flexDirection: "row",
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 5
+    alignSelf: 'stretch',
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 5,
   },
   list: {
     // flex: 1, // white screen
-    alignSelf: "stretch",
+    alignSelf: 'stretch',
     marginLeft: 5,
-    marginRight: 5
+    marginRight: 5,
   },
   name: {
     flex: 1, // required
     // backgroundColor: 'lightblue',  // dev only
     // alignSelf: 'stretch',  // causes Text to stretch vertically, disabling vertical align center
-    justifyContent: "center",
-    alignItems: "center",
-    marginLeft: 5
-  }
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 5,
+  },
 });
 
 // https://www.apollographql.com/docs/react/essentials/get-started
@@ -157,7 +157,7 @@ export default class App extends React.Component {
                         <Image
                           style={{ width: 50, height: 50 }}
                           source={{
-                            uri: item.thumbnail
+                            uri: item.thumbnail,
                           }}
                         />
                         <Text style={styles.name}>{item.name}</Text>
@@ -171,7 +171,7 @@ export default class App extends React.Component {
                           `}
                         >
                           {({ loading, data, error }) => {
-                            console.log("LIKE CONSOLE");
+                            console.log('LIKE CONSOLE');
                             console.log(data && data.likedCharacters);
 
                             return (
@@ -183,7 +183,7 @@ export default class App extends React.Component {
                                 `}
                               >
                                 {addMultiLike => {
-                                  console.log("ADD MULTI LIKE MUTATION");
+                                  console.log('ADD MULTI LIKE MUTATION');
                                   if (data) {
                                     console.log(data.likedCharacters);
                                   }
@@ -191,18 +191,18 @@ export default class App extends React.Component {
                                     <Button
                                       onPress={() =>
                                         addMultiLike({
-                                          variables: { character: item }
+                                          variables: { character: item },
                                         })
                                       }
                                       title={
                                         data.likedCharacters
                                           .map(char => char.id)
                                           .indexOf(item.id) > -1
-                                          ? "Unlike"
-                                          : "Like"
+                                          ? 'Unlike'
+                                          : 'Like'
                                       }
-                                      color="#841584"
-                                      accessibilityLabel="Learn more about this button"
+                                      color='#841584'
+                                      accessibilityLabel='Learn more about this button'
                                     />
                                   );
                                 }}
@@ -226,7 +226,7 @@ export default class App extends React.Component {
           `}
         >
           {({ loading, data, error }) => {
-            console.log("STUFF", loading, data && data.isConnected, error);
+            console.log('STUFF', loading, data && data.isConnected, error);
             return <Text> stuff: {`${data && data.isConnected}`}</Text>;
           }}
         </Query>
@@ -244,17 +244,17 @@ export default class App extends React.Component {
                   onPress={() =>
                     updateNetworkStatus({ variables: { isConnected: false } })
                   }
-                  title="OFF"
-                  color="#841584"
-                  accessibilityLabel="off"
+                  title='OFF'
+                  color='#841584'
+                  accessibilityLabel='off'
                 />
                 <Button
                   onPress={() =>
                     updateNetworkStatus({ variables: { isConnected: true } })
                   }
-                  title="ON"
-                  color="#841584"
-                  accessibilityLabel="on"
+                  title='ON'
+                  color='#841584'
+                  accessibilityLabel='on'
                 />
               </View>
             );

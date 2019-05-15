@@ -1,11 +1,11 @@
-import React from 'react';
+import React from './node_modules/react';
 import { Button, Image, FlatList, StyleSheet, Text, View } from 'react-native';
 
-import { ApolloProvider, Query, Mutation } from 'react-apollo';
+import { ApolloProvider, Query, Mutation } from './node_modules/react-apollo';
 
-import ApolloClient from 'apollo-boost';
+import ApolloClient from './node_modules/apollo-boost';
 
-import { gql } from 'apollo-boost';
+import { gql } from './node_modules/apollo-boost';
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
