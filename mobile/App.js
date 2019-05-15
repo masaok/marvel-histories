@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   }
 });
 
-// const cache = new InMemoryCache();
+// https://www.apollographql.com/docs/react/essentials/get-started
 
 export default class App extends React.Component {
   render() {
@@ -84,7 +84,6 @@ export default class App extends React.Component {
         >
           {({ loading, data, error }) => {
             console.log(loading, data && data.characters, error);
-            // TODO: splice the data.characters to 3 characters for dev purposes
             if (loading || error) {
               return (
                 <View style={styles.container}>
@@ -93,7 +92,7 @@ export default class App extends React.Component {
               );
             }
             if (data && data.characters) {
-              data.characters.splice(3);
+              data.characters.splice(3); // for dev only
             }
             return (
               <View style={styles.container}>
@@ -171,5 +170,3 @@ export default class App extends React.Component {
     );
   }
 }
-
-// https://www.apollographql.com/docs/react/essentials/get-started
