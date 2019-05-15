@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Button, Image, FlatList, StyleSheet, Text, View } from 'react-native';
 
 import { ApolloProvider, Query } from 'react-apollo';
 
@@ -9,6 +9,37 @@ import { gql } from 'apollo-boost';
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql'
+});
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  row: {
+    flex: 1,
+    alignSelf: 'stretch',
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 5
+  },
+  list: {
+    // flex: 1, // white screen
+    alignSelf: 'stretch',
+    marginLeft: 5,
+    marginRight: 5
+  },
+  name: {
+    flex: 1, // required
+    // backgroundColor: 'lightblue',  // dev only
+    // alignSelf: 'stretch',  // causes Text to stretch vertically, disabling vertical align center
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 5
+  }
 });
 
 export default class App extends React.Component {
@@ -29,6 +60,7 @@ export default class App extends React.Component {
         >
           {({ loading, data, error }) => {
             console.log(loading, data && data.characters, error);
+            // TODO: splice the data.characters to 3 characters for dev purposes
             if (loading || error) {
               return (
                 <View style={styles.container}>
@@ -36,41 +68,39 @@ export default class App extends React.Component {
                 </View>
               );
             }
-            return data.characters.map(character => (
+            return (
               <View style={styles.container}>
-                <Text>
-                  {character.name}
-                </Text>
-                {/* <Image
-                  style={{ width: 620, height: 413 }}
-                  source={{
-                    uri:
-                      'https://images.immediate.co.uk/volatile/sites/3/2018/03/DTT4430_v707.1023-61174bd.jpg?quality=90&resize=620,413'
+                <FlatList
+                  style={styles.list}
+                  data={data.characters}
+                  keyExtractor={(item, index) => item.id}
+                  renderItem={({ item }) => {
+                    return (
+                      <View style={styles.row} key={item.id}>
+                        <Image
+                          style={{ width: 50, height: 50 }}
+                          source={{
+                            uri: item.thumbnail
+                          }}
+                        />
+                        <Text style={styles.name}>{item.name}</Text>
+                        <Button
+                          onPress={() => {}}
+                          title='Like'
+                          color='#841584'
+                          accessibilityLabel='Learn more about this button'
+                        />
+                      </View>
+                    );
                   }}
-                />     */}
-                <Image
-                style={{ width: 50, height: 50 }}
-                source={{
-                  uri: character.thumbnail
-                    
-                }}
-              />
+                />
               </View>
-            ));
+            );
           }}
         </Query>
       </ApolloProvider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});
 
 // https://www.apollographql.com/docs/react/essentials/get-started
