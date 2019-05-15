@@ -43,17 +43,23 @@ const client = new ApolloClient({
             }
           `;
           const previous = cache.readQuery({ query });
-          // const newLikedCharacter = {
-          //   id: character.id,
-          //   __typename: 'Character'
-          // };
+
+          console.log('CHECKING EXISTENCE');
+          console.log(character);
+          const exists = previous.likedCharacters.some(item => {
+            return item.id === character.id;
+          });
+          console.log('EXISTS: ' + exists);
+
           character.__typename = 'Character'; // must give typename (Apollo client thing)
           const data = {
             likedCharacters: previous.likedCharacters.concat([character])
           };
 
           // you can also do cache.writeData({ data }) here if you prefer
-          cache.writeQuery({ query, data });
+          if (!exists) {
+            cache.writeQuery({ query, data });
+          }
           return data;
         }
       }
