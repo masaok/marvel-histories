@@ -139,37 +139,31 @@ export default class App extends React.Component {
         </Query>
         <Mutation
           mutation={gql`
-            mutation {
-              updateNetworkStatus(isConnected: false) @client
+            mutation UPDATE_NETWORK_STATUS($isConnected: Boolean!) {
+              updateNetworkStatus(isConnected: $isConnected) @client
             }
           `}
         >
           {updateNetworkStatus => {
             return (
-              <Button
-                onPress={() => updateNetworkStatus()}
-                title='OFF'
-                color='#841584'
-                accessibilityLabel='off'
-              />
-            );
-          }}
-        </Mutation>
-        <Mutation
-          mutation={gql`
-            mutation {
-              updateNetworkStatus(isConnected: true) @client
-            }
-          `}
-        >
-          {updateNetworkStatus => {
-            return (
-              <Button
-                onPress={() => updateNetworkStatus()}
-                title='ON'
-                color='#841584'
-                accessibilityLabel='on'
-              />
+              <View>
+                <Button
+                  onPress={() =>
+                    updateNetworkStatus({ variables: { isConnected: false } })
+                  }
+                  title='OFF'
+                  color='#841584'
+                  accessibilityLabel='off'
+                />
+                <Button
+                  onPress={() =>
+                    updateNetworkStatus({ variables: { isConnected: true } })
+                  }
+                  title='ON'
+                  color='#841584'
+                  accessibilityLabel='on'
+                />
+              </View>
             );
           }}
         </Mutation>
