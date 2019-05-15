@@ -77,7 +77,9 @@ export default class App extends React.Component {
                         style={{ width: 50, height: 50 }}
                         source={{ uri: char.thumbnail }}
                       />
-                      <Text style={{ flex: 1 }}>{char.name}</Text>
+                      <Text style={{ flex: 1, fontWeight: "bold" }}>
+                        {char.name}
+                      </Text>
                     </View>
                   );
                 })}
