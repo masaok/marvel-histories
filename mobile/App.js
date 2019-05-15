@@ -1,14 +1,36 @@
 import React from 'react';
 import { Button, Image, FlatList, StyleSheet, Text, View } from 'react-native';
 
-import { ApolloProvider, Query } from 'react-apollo';
+import { ApolloProvider, Query, Mutation } from 'react-apollo';
 
 import ApolloClient from 'apollo-boost';
 
 import { gql } from 'apollo-boost';
 
+// TODO: when user taps "Like", that data should be saved locally in JSON
+// TODO:
+
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql'
+  uri: 'http://localhost:4000/graphql',
+  clientState: {
+    defaults: {
+      isConnected: true,
+      // likes: [] // character ID's liked by the user
+      likedCharacter: null
+    },
+    resolvers: {
+      Mutation: {
+        updateNetworkStatus: (_, { isConnected }, { cache }) => {
+          cache.writeData({ data: { isConnected } });
+          return null;
+        },
+        addLike: (_, { character }, { cache }) => {
+          cache.writeData({ data: { likedCharacter: character } });
+          return null;
+        }
+      }
+    }
+  }
 });
 
 const styles = StyleSheet.create({
@@ -42,6 +64,8 @@ const styles = StyleSheet.create({
   }
 });
 
+// const cache = new InMemoryCache();
+
 export default class App extends React.Component {
   render() {
     return (
@@ -67,6 +91,9 @@ export default class App extends React.Component {
                   <Text>Loading...</Text>
                 </View>
               );
+            }
+            if (data && data.characters) {
+              data.characters.splice(3);
             }
             return (
               <View style={styles.container}>
@@ -98,6 +125,54 @@ export default class App extends React.Component {
             );
           }}
         </Query>
+        <Query
+          query={gql`
+            {
+              isConnected @client
+            }
+          `}
+        >
+          {({ loading, data, error }) => {
+            console.log('STUFF', loading, data && data.isConnected, error);
+            return <Text> stuff: {`${data && data.isConnected}`}</Text>;
+          }}
+        </Query>
+        <Mutation
+          mutation={gql`
+            mutation {
+              updateNetworkStatus(isConnected: false) @client
+            }
+          `}
+        >
+          {updateNetworkStatus => {
+            return (
+              <Button
+                onPress={() => updateNetworkStatus()}
+                title='OFF'
+                color='#841584'
+                accessibilityLabel='off'
+              />
+            );
+          }}
+        </Mutation>
+        <Mutation
+          mutation={gql`
+            mutation {
+              updateNetworkStatus(isConnected: true) @client
+            }
+          `}
+        >
+          {updateNetworkStatus => {
+            return (
+              <Button
+                onPress={() => updateNetworkStatus()}
+                title='ON'
+                color='#841584'
+                accessibilityLabel='on'
+              />
+            );
+          }}
+        </Mutation>
       </ApolloProvider>
     );
   }
