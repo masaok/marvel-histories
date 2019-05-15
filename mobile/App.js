@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 import { ApolloProvider, Query } from 'react-apollo';
 
@@ -41,6 +41,13 @@ export default class App extends React.Component {
                 <Text>
                   {character.name}, {character.thumbnail}
                 </Text>
+                <Image
+                  style={{ width: 620, height: 413 }}
+                  source={{
+                    uri:
+                      'https://images.immediate.co.uk/volatile/sites/3/2018/03/DTT4430_v707.1023-61174bd.jpg?quality=90&resize=620,413'
+                  }}
+                />
               </View>
             ));
           }}
