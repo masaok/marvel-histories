@@ -17,7 +17,8 @@ const AppNavigator = createStackNavigator(
     CharacterTimeline: CharacterTimelineScreen
   },
   {
-    initialRouteName: 'CharacterTimeline'
+    // initialRouteName: 'CharacterTimeline'
+    initialRouteName: 'Home'
     // headerMode: 'none',
   }
 );
