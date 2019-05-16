@@ -5,6 +5,7 @@ import SearchScreen from '../components/Main/screens/SearchScreen';
 import ViewCharacterScreen from '../components/Detail/screens/ViewCharacterScreen';
 import ViewComicScreen from '../components/Detail/screens/ViewComicScreen';
 import ViewSeriesScreen from '../components/Detail/screens/ViewSeriesScreen';
+import CharacterTimelineScreen from '../components/Timelines/screens/CharacterTimelineScreen';
 
 const AppNavigator = createStackNavigator(
   {
@@ -13,9 +14,10 @@ const AppNavigator = createStackNavigator(
     ViewCharacter: ViewCharacterScreen,
     ViewComic: ViewComicScreen,
     ViewSeries: ViewSeriesScreen,
+    CharacterTimeline: CharacterTimelineScreen
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'CharacterTimeline'
     // headerMode: 'none',
   }
 );
