@@ -8,6 +8,7 @@ const AppNavigator = createStackNavigator(
   },
   {
     initialRouteName: 'Main',
+    headerMode: 'auto',
   }
 );
 

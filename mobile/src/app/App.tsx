@@ -7,7 +7,7 @@ import { AppContainer } from './router';
 import NavigationService from '../services/NavigationService';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
+  uri: 'http://localhost:4000/graphql'
 });
 
 export default class App extends React.Component {
