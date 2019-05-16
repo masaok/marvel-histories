@@ -3,23 +3,24 @@
  */
 
 import * as React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
 import styles from './MainScreenHeader.styles';
-import { Header, Icon } from 'react-native-elements';
 import Heading from '../../Content/Heading';
+import BaseHeader from '../BaseHeader';
+import { Icon } from 'react-native-elements';
+import { HeaderProps } from 'react-navigation';
 
-export interface Props {}
+export interface Props extends HeaderProps {}
 
 interface State {}
 
 export default class MainScreenHeader extends React.Component<Props, State> {
   render() {
     return (
-      <Header
+      <BaseHeader
         backgroundColor='orange'
         // containerStyle={this.props.hideBottomBar && { borderBottomWidth: 0 }}
-        placement='right'
         leftComponent={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Icon

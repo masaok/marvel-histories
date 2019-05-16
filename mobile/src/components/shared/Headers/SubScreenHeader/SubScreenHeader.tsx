@@ -3,23 +3,26 @@
  */
 
 import * as React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
 import styles from './SubScreenHeader.styles';
-import { Header, Icon } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import Heading from '../../Content/Heading';
 import NavigationService from '../../../../services/NavigationService';
+import BaseHeader from '../BaseHeader';
+import { HeaderProps } from 'react-navigation';
 
-export interface Props {}
+export interface Props extends HeaderProps {
+  title: string;
+}
 
 interface State {}
 
 export default class SubScreenHeader extends React.Component<Props, State> {
   render() {
     return (
-      <Header
+      <BaseHeader
         backgroundColor='white'
-        placement='right'
         containerStyle={{ borderBottomWidth: 1.5 }}
         leftComponent={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -31,7 +34,7 @@ export default class SubScreenHeader extends React.Component<Props, State> {
               onPress={() => NavigationService.goBack()}
               containerStyle={{ marginRight: 4 }}
             />
-            <Heading type={'h7'}>PAGE NAME GOES HERE</Heading>
+            <Heading type={'h7'}>{this.props.title}</Heading>
           </View>
         }
       />
