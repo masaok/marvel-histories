@@ -1,53 +1,54 @@
-import React from './node_modules/react';
-import { Button, Image, FlatList, StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { Button, Image, FlatList, StyleSheet, Text, View } from "react-native";
 
-import { ApolloProvider, Query, Mutation } from './node_modules/react-apollo';
+import { ApolloProvider, Query, Mutation } from "react-apollo";
 
-import ApolloClient from './node_modules/apollo-boost';
+import ApolloClient from "apollo-boost";
 
-import { gql } from './node_modules/apollo-boost';
+import { gql } from "apollo-boost";
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
+  uri: "http://localhost:4000/graphql"
 });
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 50,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 50
   },
   row: {
     flex: 1,
-    alignSelf: 'stretch',
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 5,
+    alignSelf: "stretch",
+    flexDirection: "row",
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 5
   },
   list: {
-    alignSelf: 'stretch',
+    alignSelf: "stretch",
     marginLeft: 5,
-    marginRight: 5,
+    marginRight: 5
   },
   name: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 5,
-  },
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 5
+  }
 });
 
 export default class App extends React.Component {
+  _keyExtractor = item => item.id;
   render() {
     return (
       <ApolloProvider client={client}>
         <Query
           query={gql`
             {
-              characters(offset: 2) {
+              characters(offset: 50) {
                 id
                 name
                 description
@@ -64,25 +65,24 @@ export default class App extends React.Component {
                 </View>
               );
             }
-            console.log(data && data.characters);
             return (
-              <View style={styles.container}>
-                {data.characters.map(char => {
+              <FlatList
+                data={data.characters}
+                keyExtractor={this._keyExtractor}
+                renderItem={({ item }) => {
                   return (
                     <View
-                      style={{ flexDirection: 'row', alignItems: 'center' }}
+                      style={{ flexDirection: "row", alignItems: "center" }}
                     >
                       <Image
                         style={{ width: 50, height: 50 }}
-                        source={{ uri: char.thumbnail }}
+                        source={{ uri: item.thumbnail }}
                       />
-                      <Text style={{ flex: 1, fontWeight: 'bold' }}>
-                        {char.name}
-                      </Text>
+                      <Text>{item.name}</Text>
                     </View>
                   );
-                })}
-              </View>
+                }}
+              />
             );
           }}
         </Query>
