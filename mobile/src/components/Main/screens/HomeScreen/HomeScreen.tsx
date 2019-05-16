@@ -16,8 +16,7 @@ interface State {}
 
 export default class HomeScreen extends React.Component<Props, State> {
   static navigationOptions = {
-    title: 'Home',
-    header: <SubScreenHeader />,
+    header: props => <SubScreenHeader title={'Home'} {...props} />,
   };
   _keyExtractor = item => item.id;
   render() {
