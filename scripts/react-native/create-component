@@ -1,6 +1,5 @@
 #!/bin/bash
 
-ls "$MARVEL_HISTORIES_SCRIPTS/react-native/GENERIC_COMPONENT"
 cp -r "$MARVEL_HISTORIES_SCRIPTS/react-native/GENERIC_COMPONENT" "$1"
 
 cd "$1"
