@@ -19,7 +19,7 @@ const TimelinesNavigator = createStackNavigator(
   },
   {
     initialRouteName: 'Timelines',
-    headerMode: 'screen',
+    headerMode: 'none',
   }
 );
 
@@ -30,7 +30,7 @@ Font.loadAsync({
 export const MainTabsNavigator = createBottomTabNavigator(
   {
     Home: {
-      screen: HomeNavigator,
+      screen: HomeScreen,
       navigationOptions: {
         title: `Home`,
         tabBarLabel: 'Home',
@@ -46,7 +46,7 @@ export const MainTabsNavigator = createBottomTabNavigator(
     },
 
     Search: {
-      screen: SearchNavigator,
+      screen: SearchScreen,
       navigationOptions: {
         title: `Search`,
         tabBarLabel: 'Search',
@@ -57,7 +57,7 @@ export const MainTabsNavigator = createBottomTabNavigator(
     },
 
     Timelines: {
-      screen: TimelinesNavigator,
+      screen: BrowseTimelinesScreen,
       navigationOptions: {
         title: `Timelines`,
         tabBarLabel: 'Timelines',
