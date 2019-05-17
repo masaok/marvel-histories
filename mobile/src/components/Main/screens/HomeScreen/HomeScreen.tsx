@@ -2,13 +2,13 @@
  * HomeScreen
  */
 
-import * as React from 'react';
-import { Button, Image, FlatList, StyleSheet, Text, View } from 'react-native';
-import { Query } from 'react-apollo';
-import { gql } from 'apollo-boost';
-import styles from './HomeScreen.styles';
-import MainScreenHeader from '../../../shared/Headers/MainScreenHeader';
-import SubScreenHeader from '../../../shared/Headers/SubScreenHeader';
+import * as React from "react";
+import { Button, Image, FlatList, StyleSheet, Text, View } from "react-native";
+import { Query } from "react-apollo";
+import { gql } from "apollo-boost";
+import styles from "./HomeScreen.styles";
+import MainScreenHeader from "../../../shared/Headers/MainScreenHeader";
+import SubScreenHeader from "../../../shared/Headers/SubScreenHeader";
 
 export interface Props {}
 
@@ -16,7 +16,7 @@ interface State {}
 
 export default class HomeScreen extends React.Component<Props, State> {
   static navigationOptions = {
-    header: props => <MainScreenHeader {...props} />,
+    header: props => <MainScreenHeader {...props} />
   };
   _keyExtractor = item => item.id;
   render() {
@@ -48,7 +48,7 @@ export default class HomeScreen extends React.Component<Props, State> {
               keyExtractor={this._keyExtractor}
               renderItem={({ item }) => {
                 return (
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Image
                       style={{ width: 50, height: 50 }}
                       source={{ uri: item.thumbnail }}

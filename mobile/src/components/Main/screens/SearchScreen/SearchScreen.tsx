@@ -3,39 +3,47 @@
  */
 
 import * as React from "react";
-import { Text, View, FlatList, Image, TextInput } from "react-native";
+import {
+  Text,
+  View,
+  FlatList,
+  Image,
+  TextInput,
+  TouchableWithoutFeedback
+} from "react-native";
 
 import styles from "./SearchScreen.styles";
 import MainScreenHeader from "../../../shared/Headers/MainScreenHeader";
 
 import { Query } from "react-apollo";
 import { gql } from "apollo-boost";
+import ViewCharacterScreen from "../../../Detail/screens/ViewCharacterScreen";
+import NavigationService from "../../../../services/NavigationService";
 
 export interface Props {}
 
 interface State {
   text: string;
-  id: number | null;
+  name: string | null;
 }
 
 export default class SearchScreen extends React.Component<Props, State> {
   static navigationOptions = {
     header: props => <MainScreenHeader {...props} />
   };
-  _keyExtractor = item => item.id;
+  _keyExtractor = item => item.name;
   constructor(props) {
     super(props);
-    this.state = { text: "Stuff", id: null };
+    this.state = { text: "Thor", name: null };
   }
   render() {
     return (
       <Query
-        skip={this.state.id === null}
-        variables={{ id: this.state.id }}
+        skip={this.state.name === null}
+        variables={{ name: this.state.name }}
         query={gql`
-          query heroFind($id: Int) {
-            getCharacter(where: { id: $id }) {
-              id
+          query heroFind($name: String) {
+            getCharacter(where: { name: $name }) {
               name
               description
               thumbnail
@@ -62,7 +70,7 @@ export default class SearchScreen extends React.Component<Props, State> {
                 onChangeText={text => this.setState({ text })}
                 value={this.state.text}
                 onSubmitEditing={() => {
-                  this.setState({ id: +this.state.text });
+                  this.setState({ name: this.state.text });
                 }}
               />
               {data && (
@@ -71,16 +79,22 @@ export default class SearchScreen extends React.Component<Props, State> {
                   keyExtractor={this._keyExtractor}
                   renderItem={({ item }) => {
                     return (
-                      <View
-                        style={{ flexDirection: "row", alignItems: "center" }}
+                      <TouchableWithoutFeedback
+                        onPress={() =>
+                          NavigationService.navigate("Timelines", data)
+                        }
                       >
-                        <Image
-                          style={{ width: 50, height: 50 }}
-                          source={{ uri: item.thumbnail }}
-                        />
-                        <Text>{item.name}</Text>
-                        <Text>{item.description}</Text>
-                      </View>
+                        <View
+                          style={{ flexDirection: "row", alignItems: "center" }}
+                        >
+                          <Image
+                            style={{ width: 50, height: 50 }}
+                            source={{ uri: item.thumbnail }}
+                          />
+                          <Text>{item.name}</Text>
+                          <Text>{item.description}</Text>
+                        </View>
+                      </TouchableWithoutFeedback>
                     );
                   }}
                 />

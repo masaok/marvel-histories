@@ -19,7 +19,7 @@ const TimelinesNavigator = createStackNavigator(
     Timelines: BrowseTimelinesScreen
   },
   {
-    initialRouteName: "Timelines",
+    initialRouteName: "ViewCharacter",
     headerMode: "screen"
   }
 );
