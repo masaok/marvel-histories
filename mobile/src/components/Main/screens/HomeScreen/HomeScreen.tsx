@@ -22,6 +22,7 @@ export default class HomeScreen extends React.Component<Props, State> {
   _keyExtractor = item => item.id;
   render() {
     return (
+      // @ts-ignore
       <Query
         query={gql`
           {
