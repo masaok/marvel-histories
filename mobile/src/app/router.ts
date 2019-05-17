@@ -5,18 +5,14 @@ import SearchScreen from "../components/Main/screens/SearchScreen";
 import ViewCharacterScreen from "../components/Detail/screens/ViewCharacterScreen";
 import ViewComicScreen from "../components/Detail/screens/ViewComicScreen";
 import ViewSeriesScreen from "../components/Detail/screens/ViewSeriesScreen";
+import { MainTabsNavigator } from "../components/Main/router";
 
 const AppNavigator = createStackNavigator(
   {
-    Home: HomeScreen,
-    Search: SearchScreen,
-    ViewCharacter: ViewCharacterScreen,
-    ViewComic: ViewComicScreen,
-    ViewSeries: ViewSeriesScreen
+    Main: MainTabsNavigator
   },
   {
-    initialRouteName: "ViewCharacter"
-    // headerMode: 'none',
+    initialRouteName: "Main"
   }
 );
 
