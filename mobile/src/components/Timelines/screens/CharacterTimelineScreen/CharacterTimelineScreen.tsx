@@ -1,34 +1,31 @@
 /**
- * HomeScreen
+ * CharacterTimelineScreen
  */
 
 import * as React from 'react';
-import { Button, Image, FlatList, StyleSheet, Text, View } from 'react-native';
+import { Text, View, FlatList, Image } from 'react-native';
+
+import styles from './CharacterTimelineScreen.styles';
 import { Query } from 'react-apollo';
-import { gql } from 'apollo-boost';
-import styles from './HomeScreen.styles';
-import MainScreenHeader from '../../../shared/Headers/MainScreenHeader';
-import SubScreenHeader from '../../../shared/Headers/SubScreenHeader';
+import gql from 'graphql-tag';
 
 export interface Props {}
 
 interface State {}
 
-export default class HomeScreen extends React.Component<Props, State> {
-  static navigationOptions = {
-    header: props => <MainScreenHeader {...props} />,
-  };
+export default class CharacterTimelineScreen extends React.Component<
+  Props,
+  State
+> {
   _keyExtractor = item => item.id;
   render() {
     return (
-      // @ts-ignore
       <Query
         query={gql`
           {
-            characters(offset: 50) {
+            comics(where: { characters: [1011334] }) {
               id
-              name
-              description
+              title
               thumbnail
             }
           }
@@ -44,7 +41,7 @@ export default class HomeScreen extends React.Component<Props, State> {
           }
           return (
             <FlatList
-              data={data.characters}
+              data={data.comics}
               keyExtractor={this._keyExtractor}
               renderItem={({ item }) => {
                 return (
@@ -53,7 +50,7 @@ export default class HomeScreen extends React.Component<Props, State> {
                       style={{ width: 50, height: 50 }}
                       source={{ uri: item.thumbnail }}
                     />
-                    <Text>{item.name}</Text>
+                    <Text>{item.title}</Text>
                   </View>
                 );
               }}
