@@ -1,13 +1,22 @@
-import { createAppContainer, createStackNavigator } from 'react-navigation';
+import { createAppContainer, createStackNavigator } from "react-navigation";
 
-import { MainTabsNavigator } from '../components/Main/router';
+import HomeScreen from "../components/Main/screens/HomeScreen";
+import SearchScreen from "../components/Main/screens/SearchScreen";
+import ViewCharacterScreen from "../components/Detail/screens/ViewCharacterScreen";
+import ViewComicScreen from "../components/Detail/screens/ViewComicScreen";
+import ViewSeriesScreen from "../components/Detail/screens/ViewSeriesScreen";
 
 const AppNavigator = createStackNavigator(
   {
-    Main: MainTabsNavigator,
+    Home: HomeScreen,
+    Search: SearchScreen,
+    ViewCharacter: ViewCharacterScreen,
+    ViewComic: ViewComicScreen,
+    ViewSeries: ViewSeriesScreen
   },
   {
-    initialRouteName: 'Main',
+    initialRouteName: "ViewCharacter"
+    // headerMode: 'none',
   }
 );
 
