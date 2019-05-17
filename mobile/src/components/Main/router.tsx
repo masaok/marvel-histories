@@ -31,7 +31,7 @@ Font.loadAsync({
 export const MainTabsNavigator = createBottomTabNavigator(
   {
     Home: {
-      screen: HomeNavigator,
+      screen: HomeScreen,
       navigationOptions: {
         title: `Home`,
         tabBarLabel: "Home",
@@ -47,7 +47,7 @@ export const MainTabsNavigator = createBottomTabNavigator(
     },
 
     Search: {
-      screen: SearchNavigator,
+      screen: SearchScreen,
       navigationOptions: {
         title: `Search`,
         tabBarLabel: "Search",
