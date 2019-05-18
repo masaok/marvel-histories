@@ -23,10 +23,11 @@ export default class CharacterTimelineScreen extends React.Component<
       <Query
         query={gql`
           {
-            comics(where: { characters: [1011334] }) {
+            comics(where: { characters: [1009313] }, orderBy: focDate_asc, limit: 10 ) {
               id
               title
               thumbnail
+              dates { type, date }
             }
           }
         `}
@@ -44,8 +45,18 @@ export default class CharacterTimelineScreen extends React.Component<
               data={data.comics}
               keyExtractor={this._keyExtractor}
               renderItem={({ item }) => {
+
+                // Parse and convert the date info for display
+                const onsaleDate = item.dates[0].date
+                const substring = onsaleDate.substring(0, 19)
+                const obj = new Date(substring)
+                const displayDay = obj.getDate() + 1
+                const displayMonth = obj.getMonth() + 1
+                const displayFullYear = obj.getFullYear() + 1
+
                 return (
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text>{displayMonth}/{displayDay}/{displayFullYear}</Text>
                     <Image
                       style={{ width: 50, height: 50 }}
                       source={{ uri: item.thumbnail }}
