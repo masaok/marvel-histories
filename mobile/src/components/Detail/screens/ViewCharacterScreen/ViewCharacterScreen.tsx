@@ -30,15 +30,21 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
   }
 
   render() {
+    // data is defined when the user taps Search first, then searches for a character, and taps the character
     const data = this.props.navigation.state.params;
+    console.log(data)
+    console.log(this.props)
 
     return (
       <FlatList
         data={[data.getCharacter]}
         keyExtractor={this._keyExtractor}
         renderItem={({ item }) => {
+          console.log(item)
+
+          // TODO: key warning here (the key below does not fix the warning)
           return (
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View style={{ flexDirection: "row", alignItems: "center" }} key={item.id}>
               <Image
                 style={{ width: 50, height: 50 }}
                 source={{ uri: item.thumbnail }}
