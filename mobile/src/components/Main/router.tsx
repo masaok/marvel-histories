@@ -89,6 +89,23 @@ export const MainTabsNavigator = createBottomTabNavigator(
           />
         )
       }
+    },
+
+    // Temporary page for testing
+    BrowseTimelines: {
+      screen: BrowseTimelinesScreen,
+      navigationOptions: {
+        title: `Browse Timelines`,
+        tabBarLabel: "Browse Timelines",
+        tabBarIcon: ({ tintColor = "" }) => (
+          <Icon
+            type="material-community"
+            name="folder"
+            size={35}
+            color={tintColor}
+          />
+        )
+      }
     }
   },
   {
