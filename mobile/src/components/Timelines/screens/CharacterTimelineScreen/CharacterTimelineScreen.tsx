@@ -56,7 +56,7 @@ export default class CharacterTimelineScreen extends React.Component<
                         // TODO: this resolver function references a function in App.tsx, in the Apollo client
                         // TODO: how do you import and call it here?
                         toggleCharacterTimelineSave({
-                          variables: { character: item }
+                          variables: { character: { id: 1009313 } }
                         })
                       }}
                       title="TEST"
