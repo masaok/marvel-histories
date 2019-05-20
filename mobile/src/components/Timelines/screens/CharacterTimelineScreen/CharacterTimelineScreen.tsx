@@ -44,7 +44,13 @@ export default class CharacterTimelineScreen extends React.Component<
             <View>
               <Text>Add to Saved Timelines</Text>
               <Button
-                onPress={() => { }}
+                onPress={() => {
+                  // TODO: this resolver function references a function in App.tsx, in the Apollo client
+                  // TODO: how do you import and call it here?
+                  toggleCharacterTimelineSave({
+                    variables: { character: item }
+                  })
+                }}
                 title="TEST"
                 // title={
                 //   data.likedCharacters
