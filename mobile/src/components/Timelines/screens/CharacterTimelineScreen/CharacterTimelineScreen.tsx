@@ -23,10 +23,19 @@ export default class CharacterTimelineScreen extends React.Component<
   };
   _keyExtractor = item => item.id;
   render() {
+    // TODO: This is probably how the character will be incoming from a previous page
+    // const character = this.props.navigation.getParam("character");
+
+    // TODO: But for now, let's mock it
+    // TODO: Add a thumbnail here
+    const character = {
+      id: 1009313
+    }
     return (
       <Query
         query={gql`
           {
+            # TODO: need to mock this ID similar to how a user would navigate here from another page
             comics(where: { characters: [1009313] }, orderBy: focDate_asc, limit: 10 ) {
               id
               title
@@ -62,6 +71,7 @@ export default class CharacterTimelineScreen extends React.Component<
                     <Button
                       onPress={() => {
                         toggleSaveCharacterTimeline({
+                          // TODO: need to save more info (thumbnail, etc) at this point
                           variables: { character: { id: 1009313 } }
                         })
                       }}

@@ -24,6 +24,11 @@ const client = new ApolloClient({
       savedCharacterTimelines: [],
     },
     resolvers: {
+      Query: {
+        fetchCharacters: (_, { characters }, { client }) => {
+          // Given the array of characters, query the API for each character to get its thumbnail
+        },
+      },
       Mutation: {
         updateNetworkStatus: (_, { isConnected }, { cache }) => {
           cache.writeData({ data: { isConnected } });

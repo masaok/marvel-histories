@@ -29,12 +29,12 @@ export default class BrowseTimelinesScreen extends React.Component<
       <Query
         query={gql`
           {
-            comics(where: { characters: [1009313] }, orderBy: focDate_asc, limit: 10 ) {
-              id
-              title
-              thumbnail
-              dates { type, date }
-            }
+            # comics(where: { characters: [1009313] }, orderBy: focDate_asc, limit: 10 ) {
+            #   id
+            #   title
+            #   thumbnail
+            #   dates { type, date }
+            # }
             savedCharacterTimelines @client {
               id
             }
@@ -49,8 +49,11 @@ export default class BrowseTimelinesScreen extends React.Component<
               </View>
             );
           }
+          data && console.log("SAVED CHAR TIMELINES:")
+          data && console.log(data.savedCharacterTimelines)
           return (
-            <Mutation mutation={gql`
+            // Fetch all characters (Saved Character Timelines)
+            <Query query={gql`
                 mutation TOGGLE_CHARACTER_TIMELINE_SAVE($character: Character!) {
                   toggleCharacterTimelineSave(character: $character) @client
                 }
@@ -59,11 +62,11 @@ export default class BrowseTimelinesScreen extends React.Component<
               {toggleCharacterTimelineSave => {
                 console.log("SAVED CHAR TIMELINES:")
                 console.log(data.savedCharacterTimelines)
-                let comicsById = {}
-                data.comics.forEach(item => {
-                  comicsById[item.id] = item
-                  console.log("COMIC ID")
-                })
+                // let comicsById = {}
+                // data.comics.forEach(item => {
+                //   comicsById[item.id] = item
+                //   console.log("COMIC ID")
+                // })
                 // console.log("COMICS BY ID")
                 // console.log(comicsById)
                 return (
@@ -101,7 +104,7 @@ export default class BrowseTimelinesScreen extends React.Component<
                   </View>
                 )
               }}
-            </Mutation>
+            </Query>
           );
         }}
       </Query>
