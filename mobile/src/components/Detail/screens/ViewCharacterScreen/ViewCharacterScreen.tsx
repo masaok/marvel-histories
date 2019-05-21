@@ -33,7 +33,10 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
   }
 
   render() {
+    console.log("RENDER ...")
     const character = this.props.navigation.getParam("character");
+    console.log("RENDER > character:")
+    console.log(character)
     // {
     //     comics(where: {characters: [$id]}) {
     //       title
@@ -69,6 +72,7 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
           query comicFind($name: String) {
             getCharacter(where: { name: $name }) {
               id
+              name
             }
           }
         `}
@@ -81,27 +85,53 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
               </View>
             );
           }
+          data && console.log("DATA > GET CHARACTER:")
+          data && console.log(data.getCharacter)
           return (
-            <View>
-              <View
-                style={{
-                  flexDirection: "column",
-                  alignItems: "center"
-                }}
-              >
-                <Image
-                  style={styles.characterPortrait}
-                  source={{ uri: character.thumbnail }}
-                />
-                <Text> {JSON.stringify(data.id)} </Text>
+            <Query
+              query={gql`
+                {
+                  comics(where: {characters: [1009664]}) {
+                    title
+                    thumbnail
+                  }
+                }
+              `}
+            >
+              {({ loading, data, error }) => {
+                if (loading || error) {
+                  return (
+                    <View style={styles.container}>
+                      <Text>Loading...</Text>
+                    </View>
+                  );
+                }
+                data && console.log("COMICS DATA:")
+                data && console.log(data.comics)
+                return (
+                  <View>
+                    <View
+                      style={{
+                        flexDirection: "column",
+                        alignItems: "center"
+                      }}
+                    >
+                      <Image
+                        style={styles.characterPortrait}
+                        source={{ uri: character.thumbnail }}
+                      />
+                      {/* <Text> {JSON.stringify(charata.id)} </Text> */}
 
-                <View
-                  style={{
-                    flexDirection: "row"
-                  }}
-                />
-              </View>
-            </View>
+                      <View
+                        style={{
+                          flexDirection: "row"
+                        }}
+                      />
+                    </View>
+                  </View>
+                );
+              }}
+            </Query>
           );
         }}
       </Query>
