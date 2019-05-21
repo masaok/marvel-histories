@@ -34,6 +34,9 @@ const client = new ApolloClient({
           return null;
         },
         addMultiLike: (_, { character }, { cache }) => {
+
+          character.__typename = 'Character'; // must give typename (required by Apollo client)
+
           const query = gql`
             query GetLikedCharacters {
               likedCharacters @client {
@@ -43,12 +46,9 @@ const client = new ApolloClient({
           `;
           const current = cache.readQuery({ query });
 
-          console.log('CHECKING EXISTENCE');
-          console.log(character);
           const exists = current.likedCharacters.some(item => {
             return item.id === character.id;
           });
-          console.log('EXISTS: ' + exists);
 
           let likedCharacters = current.likedCharacters;
 
@@ -57,18 +57,11 @@ const client = new ApolloClient({
             .indexOf(character.id);
 
           if (index < 0) {
-            console.log('CONCATTING ...');
             likedCharacters = likedCharacters.concat([character]);
-            console.log(likedCharacters);
           } else {
-            console.log('SPLICING ...');
             likedCharacters.splice(index, 1);
-            console.log(likedCharacters);
           }
 
-          console.log('INDEX: ' + index);
-
-          character.__typename = 'Character'; // must give typename (Apollo client thing)
           const data = {
             likedCharacters,
           };
@@ -78,7 +71,9 @@ const client = new ApolloClient({
 
           return data;
         },
-        toggleCharacterTimelineSave: (_, { character }, { cache }) => {
+        toggleSaveCharacterTimeline: (_, { character }, { cache }) => {
+
+          character.__typename = 'Character'; // must give typename (required by Apollo client)
 
           // Query to fetch current data
           const query = gql`
@@ -90,17 +85,12 @@ const client = new ApolloClient({
           `;
 
           // Execute the query
-          console.log("READING QUERY")
           const current = cache.readQuery({ query });
-
-          console.log('CHECKING EXISTENCE OF INCOMING CHARACTER:');
-          console.log(character);
 
           // Does the incoming character exist in the current data?
           const exists = current.savedCharacterTimelines.some(item => {
             return item.id === character.id;
           });
-          console.log('EXISTS: ' + exists);
 
           // Prepare to edit the list
           let savedCharacterTimelines = current.savedCharacterTimelines;
@@ -112,21 +102,12 @@ const client = new ApolloClient({
 
           // Either concat or splice the mutable variable prepared above
           if (index < 0) {
-            console.log('CONCATTING ...');
             savedCharacterTimelines = savedCharacterTimelines.concat([character]);
-            console.log(savedCharacterTimelines);
           } else {
-            console.log('SPLICING ...');
             savedCharacterTimelines.splice(index, 1);
-            console.log(savedCharacterTimelines);
           }
 
-          console.log('INDEX: ' + index);
-
-          // TODO: can this go first? (might look nicer, why is it located here?)
-          character.__typename = 'Character'; // must give typename (Apollo client thing)
-
-          // TODO: can this be done inline in the writeQuery statement below?
+          // Data must a separate hash (cannot be inline in writeQuery)
           const data = {
             savedCharacterTimelines,
           };
