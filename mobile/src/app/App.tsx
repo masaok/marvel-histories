@@ -21,6 +21,7 @@ const client = new ApolloClient({
         __typename: 'Character',
       },
       likedCharacters: [],
+      savedCharacterTimelines: [],
     },
     resolvers: {
       Mutation: {
@@ -89,9 +90,10 @@ const client = new ApolloClient({
           `;
 
           // Execute the query
+          console.log("READING QUERY")
           const current = cache.readQuery({ query });
 
-          console.log('CHECKING EXISTENCE');
+          console.log('CHECKING EXISTENCE OF INCOMING CHARACTER:');
           console.log(character);
 
           // Does the incoming character exist in the current data?
