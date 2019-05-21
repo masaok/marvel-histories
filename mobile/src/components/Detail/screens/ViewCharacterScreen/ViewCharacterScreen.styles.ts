@@ -26,5 +26,9 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginLeft: 5
+  },
+  characterPortrait: {
+    width: 200,
+    height: 200
   }
 });

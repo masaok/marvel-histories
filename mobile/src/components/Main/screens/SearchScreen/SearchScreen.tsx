@@ -15,7 +15,7 @@ import {
 import styles from "./SearchScreen.styles";
 import MainScreenHeader from "../../../shared/Headers/MainScreenHeader";
 
-import { Query } from "react-apollo";
+import { Query, QueryResult } from "react-apollo";
 import { gql } from "apollo-boost";
 import ViewCharacterScreen from "../../../Detail/screens/ViewCharacterScreen";
 import NavigationService from "../../../../services/NavigationService";
@@ -54,7 +54,7 @@ export default class SearchScreen extends React.Component<Props, State> {
           }
         `}
       >
-        {({ loading, data, error }) => {
+        {({ loading, data, error }: QueryResult) => {
           if (loading || error) {
             return (
               <View style={styles.container}>
@@ -81,7 +81,9 @@ export default class SearchScreen extends React.Component<Props, State> {
                     return (
                       <TouchableWithoutFeedback
                         onPress={() =>
-                          NavigationService.navigate("Timelines", data)
+                          NavigationService.navigate("Timelines", {
+                            character: data.getCharacter
+                          })
                         }
                       >
                         <View

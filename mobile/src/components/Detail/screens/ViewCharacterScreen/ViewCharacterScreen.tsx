@@ -7,11 +7,14 @@ import { Text, View, Image, TextInput, FlatList } from "react-native";
 
 import styles from "./ViewCharacterScreen.styles";
 
-import { Query } from "react-apollo";
+import { Query, QueryResult } from "react-apollo";
 import { gql } from "apollo-boost";
 import SubScreenHeader from "../../../shared/Headers/SubScreenHeader";
+import { NavigationScreenProp } from "react-navigation";
 
-export interface Props {}
+export interface Props {
+  navigation: NavigationScreenProp<{}>;
+}
 
 interface State {
   text: string;
@@ -21,7 +24,7 @@ interface State {
 export default class ViewCharacterScreen extends React.Component<Props, State> {
   static navigationOptions = {
     title: "View Character",
-    header: <SubScreenHeader />
+    header: props => <SubScreenHeader title={"View Character"} {...props} />
   };
   _keyExtractor = item => item.id;
   constructor(props) {
@@ -30,31 +33,78 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
   }
 
   render() {
-    // data is defined when the user taps Search first, then searches for a character, and taps the character
-    const data = this.props.navigation.state.params;
-    console.log(data)
-    console.log(this.props)
+    const character = this.props.navigation.getParam("character");
+    // {
+    //     comics(where: {characters: [$id]}) {
+    //       title
+    //     }
+    // }
+
+    // const GET_CHARACTER_ID = gql`
+    // {
+    //   query comicFind($name: String) {
+    //     getCharacter(where: { name: $name }) {
+    //       id
+    //     }
+    //   }
+    // }
+    // `;
+
+    // const characterId = ({character.name}) => (
+    //   <Query query={GET_CHARACTER_ID} variables={{character.name}}>
+    //   {({loading, error, data} => {
+    //     if (loading) return null;
+    //     if (error) return `Error! ${error}`;
+    //     return();
+    //   })}
+
+    //   </Query>
+    // );
 
     return (
-      <FlatList
-        data={[data.getCharacter]}
-        keyExtractor={this._keyExtractor}
-        renderItem={({ item }) => {
-          console.log(item)
-
-          // TODO: key warning here (the key below does not fix the warning)
+      <Query
+        skip={character.name === null}
+        variables={{ name: character.name }}
+        query={gql`
+          query comicFind($name: String) {
+            getCharacter(where: { name: $name }) {
+              id
+            }
+          }
+        `}
+      >
+        {({ loading, data, error }: QueryResult) => {
+          if (loading || error) {
+            return (
+              <View style={styles.container}>
+                <Text>Loading...</Text>
+              </View>
+            );
+          }
           return (
-            <View style={{ flexDirection: "row", alignItems: "center" }} key={item.id}>
-              <Image
-                style={{ width: 50, height: 50 }}
-                source={{ uri: item.thumbnail }}
-              />
-              <Text>{item.name}</Text>
-              <Text>{item.description}</Text>
+            <View>
+              <View
+                style={{
+                  flexDirection: "column",
+                  alignItems: "center"
+                }}
+              >
+                <Image
+                  style={styles.characterPortrait}
+                  source={{ uri: character.thumbnail }}
+                />
+                <Text> {JSON.stringify(data.id)} </Text>
+
+                <View
+                  style={{
+                    flexDirection: "row"
+                  }}
+                />
+              </View>
             </View>
           );
         }}
-      />
+      </Query>
     );
   }
 }
