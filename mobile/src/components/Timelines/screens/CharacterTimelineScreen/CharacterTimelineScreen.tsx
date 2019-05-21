@@ -29,6 +29,9 @@ export default class CharacterTimelineScreen extends React.Component<
               thumbnail
               dates { type, date }
             }
+            savedCharacterTimelines @client {
+              id
+            }
           }
         `}
       >
@@ -48,6 +51,8 @@ export default class CharacterTimelineScreen extends React.Component<
               `}
             >
               {toggleCharacterTimelineSave => {
+                console.log("SAVED CHAR TIMELINES:")
+                console.log(data.savedCharacterTimelines)
                 return (
                   <View>
                     <Text>Add to Saved Timelines</Text>
@@ -59,14 +64,14 @@ export default class CharacterTimelineScreen extends React.Component<
                           variables: { character: { id: 1009313 } }
                         })
                       }}
-                      title="TEST"
-                      // title={
-                      //   data.likedCharacters
-                      //     .map(char => char.id)
-                      //     .indexOf(item.id) > -1
-                      //     ? 'Unlike'
-                      //     : 'Like'
-                      // }
+                      // title="TEST"
+                      title={
+                        data.savedCharacterTimelines
+                          .map(char => char.id)
+                          .indexOf(1009313) > -1
+                          ? 'Unsave Timeline'
+                          : 'Save Timeline'
+                      }
                       color='#841584'
                       accessibilityLabel='Learn more about this button'
                     />
