@@ -51,10 +51,6 @@ const client = new ApolloClient({
           `;
           const current = cache.readQuery({ query });
 
-          const exists = current.likedCharacters.some(item => {
-            return item.id === character.id;
-          });
-
           let likedCharacters = current.likedCharacters;
 
           const index = likedCharacters
@@ -78,6 +74,9 @@ const client = new ApolloClient({
         },
         toggleSaveCharacterTimeline: (_, { character }, { cache }) => {
 
+          console.log("TOGGLE > CHARACTER:")
+          console.log(character)
+
           character.__typename = 'Character'; // must give typename (required by Apollo client)
 
           // Query to fetch current data
@@ -85,17 +84,14 @@ const client = new ApolloClient({
             query GetSavedCharacterTimelines {
               savedCharacterTimelines @client {
                 id
+                name
+                thumbnail
               }
             }
           `;
 
           // Execute the query
           const current = cache.readQuery({ query });
-
-          // Does the incoming character exist in the current data?
-          const exists = current.savedCharacterTimelines.some(item => {
-            return item.id === character.id;
-          });
 
           // Prepare to edit the list
           let savedCharacterTimelines = current.savedCharacterTimelines;
@@ -116,6 +112,9 @@ const client = new ApolloClient({
           const data = {
             savedCharacterTimelines,
           };
+
+          console.log("TOGGLE > DATA:")
+          console.log(data)
 
           cache.writeQuery({ query, data });
 

@@ -46,6 +46,8 @@ export default class CharacterTimelineScreen extends React.Component<
             }
             savedCharacterTimelines @client {
               id
+              name
+              thumbnail
             }
           }
         `}
@@ -66,7 +68,7 @@ export default class CharacterTimelineScreen extends React.Component<
               `}
             >
               {toggleSaveCharacterTimeline => {
-                console.log("SAVED CHAR TIMELINES:")
+                console.log("QUERY > MUTATION > SAVED CHAR TIMELINES:")
                 console.log(data.savedCharacterTimelines)
                 return (
                   <View>
@@ -74,7 +76,13 @@ export default class CharacterTimelineScreen extends React.Component<
                       onPress={() => {
                         toggleSaveCharacterTimeline({
                           // TODO: need to save more info (thumbnail, etc) at this point
-                          variables: { character: { id: character.id } }
+                          variables: {
+                            character: {
+                              id: character.id,
+                              name: character.name,
+                              thumbnail: character.thumbnail,
+                            }
+                          }
                         })
                       }}
                       // title="TEST"

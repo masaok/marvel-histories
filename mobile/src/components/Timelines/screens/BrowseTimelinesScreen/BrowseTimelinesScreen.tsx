@@ -37,6 +37,8 @@ export default class BrowseTimelinesScreen extends React.Component<
             # }
             savedCharacterTimelines @client {
               id
+              name
+              thumbnail
             }
           }
         `}
@@ -53,7 +55,7 @@ export default class BrowseTimelinesScreen extends React.Component<
           data && console.log(data.savedCharacterTimelines)
           return (
             // Fetch all characters (Saved Character Timelines)
-            <Query query={gql`
+            <Mutation mutation={gql`
                 mutation TOGGLE_CHARACTER_TIMELINE_SAVE($character: Character!) {
                   toggleCharacterTimelineSave(character: $character) @client
                 }
@@ -92,10 +94,10 @@ export default class BrowseTimelinesScreen extends React.Component<
                         return (
                           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             {/* <Text>{displayMonth}/{displayDay}/{displayFullYear}</Text> */}
-                            {/* <Image
+                            <Image
                               style={{ width: 50, height: 50 }}
-                              source={{ uri: comic.thumbnail }}
-                            /> */}
+                              source={{ uri: item.thumbnail }}
+                            />
                             <Text>{item.id}</Text>
                           </View>
                         );
@@ -104,7 +106,7 @@ export default class BrowseTimelinesScreen extends React.Component<
                   </View>
                 )
               }}
-            </Query>
+            </Mutation>
           );
         }}
       </Query>
