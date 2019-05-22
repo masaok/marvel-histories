@@ -8,6 +8,7 @@ import { Text, View, FlatList, Image, Button } from 'react-native';
 import styles from './CharacterTimelineScreen.styles';
 import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
+import MainScreenHeader from '../../../shared/Headers/MainScreenHeader';
 
 export interface Props { }
 
@@ -17,12 +18,24 @@ export default class CharacterTimelineScreen extends React.Component<
   Props,
   State
   > {
+  static navigationOptions = {
+    header: props => <MainScreenHeader {...props} />,
+  };
   _keyExtractor = item => item.id;
   render() {
+    // TODO: This is probably how the character will be incoming from a previous page
+    // const character = this.props.navigation.getParam("character");
+
+    // TODO: But for now, let's mock it
+    // TODO: Add a thumbnail here
+    const character = {
+      id: 1009313
+    }
     return (
       <Query
         query={gql`
           {
+            # TODO: need to mock this ID similar to how a user would navigate here from another page
             comics(where: { characters: [1009313] }, orderBy: focDate_asc, limit: 10 ) {
               id
               title
@@ -45,22 +58,20 @@ export default class CharacterTimelineScreen extends React.Component<
           }
           return (
             <Mutation mutation={gql`
-                mutation TOGGLE_CHARACTER_TIMELINE_SAVE($character: Character!) {
-                  toggleCharacterTimelineSave(character: $character) @client
+                mutation TOGGLE_SAVE_CHARACTER_TIMELINE($character: Character!) {
+                  toggleSaveCharacterTimeline(character: $character) @client
                 }
               `}
             >
-              {toggleCharacterTimelineSave => {
+              {toggleSaveCharacterTimeline => {
                 console.log("SAVED CHAR TIMELINES:")
                 console.log(data.savedCharacterTimelines)
                 return (
                   <View>
-                    <Text>Add to Saved Timelines</Text>
                     <Button
                       onPress={() => {
-                        // TODO: this resolver function references a function in App.tsx, in the Apollo client
-                        // TODO: how do you import and call it here?
-                        toggleCharacterTimelineSave({
+                        toggleSaveCharacterTimeline({
+                          // TODO: need to save more info (thumbnail, etc) at this point
                           variables: { character: { id: 1009313 } }
                         })
                       }}

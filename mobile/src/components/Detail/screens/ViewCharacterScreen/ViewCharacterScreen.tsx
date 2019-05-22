@@ -44,6 +44,7 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
           query characterFind($name: String) {
             getCharacter(where: { name: $name }) {
               id
+              name
             }
           }
         `}
@@ -56,6 +57,7 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
               </View>
             );
           }
+
           return (
             <View>
               <View
