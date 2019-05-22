@@ -2,23 +2,24 @@
  * Heading
  */
 
-import * as React from 'react';
+import * as React from "react";
 import {
   Text,
   View,
   StyleProp,
   ViewStyle,
-  TouchableOpacity,
-} from 'react-native';
+  TouchableOpacity
+} from "react-native";
 
-import Scaled from '../../../../assets/Scaled';
-import styles from './Heading.styles';
+import Scaled from "../../../../assets/Scaled";
+import styles from "./Heading.styles";
+import { Colors } from "../../../../assets";
 
 export interface Props {
   type: string;
   family?: string;
   color?: string;
-  alignment?: 'auto' | 'left' | 'right' | 'center' | 'justify';
+  alignment?: "auto" | "left" | "right" | "center" | "justify";
   bold?: boolean;
   opacity?: number;
   numLines?: number;
@@ -43,21 +44,21 @@ export default class Heading extends React.Component<Props, State> {
       onPress,
       disabled,
       style,
-      width,
+      width
     } = this.props;
     const text = (
       <Text
         style={[
           {
             fontSize: Scaled.fontSize[type],
-            fontFamily: family || 'Avenir',
-            color: color || 'orange',
-            textAlign: alignment || 'center',
-            fontWeight: bold ? 'bold' : 'normal',
+            fontFamily: family || "Avenir",
+            color: color || Colors.orange,
+            textAlign: alignment || "center",
+            fontWeight: bold ? "bold" : "normal",
             opacity,
-            width,
+            width
           },
-          disabled ? { color: 'grey', opacity: 0.7 } : {},
+          disabled ? { color: Colors.grey, opacity: 0.7 } : {}
         ]}
         numberOfLines={numLines || 1}
       >

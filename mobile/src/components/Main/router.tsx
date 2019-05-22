@@ -12,6 +12,7 @@ import HomeScreen from "./screens/HomeScreen";
 import BrowseTimelinesScreen from "../Timelines/screens/BrowseTimelinesScreen";
 import ViewCharacterScreen from "../Detail/screens/ViewCharacterScreen";
 import CharacterTimelineScreen from "../Timelines/screens/CharacterTimelineScreen";
+import { Colors } from "../../assets";
 
 const HomeNavigator = createStackNavigator({ Home: HomeScreen });
 const SearchNavigator = createStackNavigator({ Search: SearchScreen });
@@ -111,7 +112,7 @@ export const MainTabsNavigator = createBottomTabNavigator(
   {
     initialRouteName: "Home", // Switch this to any route above for faster reload in dev
     tabBarOptions: {
-      activeTintColor: "orange"
+      activeTintColor: Colors.orange
     },
 
     // https://github.com/react-navigation/react-navigation/issues/4203#issuecomment-390995610

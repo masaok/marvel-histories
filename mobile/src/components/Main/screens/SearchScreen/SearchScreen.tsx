@@ -34,7 +34,7 @@ export default class SearchScreen extends React.Component<Props, State> {
   _keyExtractor = item => item.name;
   constructor(props) {
     super(props);
-    this.state = { text: "Thor", name: null };
+    this.state = { text: "Iron Man", name: null };
   }
   render() {
     return (
