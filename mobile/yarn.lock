@@ -930,6 +930,11 @@
   resolved "https://registry.yarnpkg.com/@types/zen-observable/-/zen-observable-0.8.0.tgz#8b63ab7f1aa5321248aad5ac890a485656dcea4d"
   integrity sha512-te5lMAWii1uEJ4FwLjzdlbw3+n0FZNOvFXHxQDKeT0dilh7HOzdMzV2TrJVUzq8ep7J4Na8OUYPRLSQkJHAlrg==
 
+AsyncStorage@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/AsyncStorage/-/AsyncStorage-0.1.5.tgz#06ddfad088dd487e703208d3c86071115549e803"
+  integrity sha1-Bt360IjdSH5wMgjTyGBxEVVJ6AM=
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -1066,6 +1071,11 @@ apollo-cache-inmemory@^1.5.1:
     optimism "^0.6.9"
     ts-invariant "^0.2.1"
     tslib "^1.9.3"
+
+apollo-cache-persist@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/apollo-cache-persist/-/apollo-cache-persist-0.1.1.tgz#e6cfe1983b998982a679aaf05241d3ed395edb1e"
+  integrity sha512-/7GAyblPR169ryW3ugbtHqiU0UGkhIt10NeaO2gn2ClxjLHF/nIkJD5mx/0OCF2vLNbbnzLZVDeIO1pf72TrEA==
 
 apollo-cache@1.2.1, apollo-cache@^1.2.1:
   version "1.2.1"
