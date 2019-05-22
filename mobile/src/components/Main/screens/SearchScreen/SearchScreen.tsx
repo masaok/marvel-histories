@@ -31,7 +31,7 @@ export default class SearchScreen extends React.Component<Props, State> {
   static navigationOptions = {
     header: props => <MainScreenHeader {...props} />
   };
-  _keyExtractor = item => item.name;
+  _keyExtractor = item => item.id;
   constructor(props) {
     super(props);
     this.state = { text: "Iron Man", name: null };

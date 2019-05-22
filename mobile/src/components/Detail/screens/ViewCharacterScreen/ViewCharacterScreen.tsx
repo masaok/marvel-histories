@@ -42,7 +42,9 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
         query={gql`
           query comicFind($id: ID!) {
             comics(where: { characters: [$id] }) {
+              id
               title
+              thumbnail
             }
           }
         `}
@@ -56,22 +58,34 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
             );
           }
 
-          // console.log(data);
-
           return (
             <View style={styles.page}>
-              <View style={styles.characterPortrait}>
+              <View style={styles.characterImageBox}>
                 <Image
                   style={styles.characterImage}
                   source={{ uri: character.thumbnail }}
                 />
-
-                <View
-                  style={{
-                    flexDirection: "row"
-                  }}
-                />
               </View>
+              <View style={styles.descriptionBox}>
+                <Text style={styles.description}>{character.description}</Text>
+              </View>
+              <FlatList
+                horizontal={false}
+                numColumns={4}
+                style={styles.comicList}
+                data={data.comics}
+                keyExtractor={this._keyExtractor}
+                renderItem={({ item }) => {
+                  return (
+                    <View>
+                      <Image
+                        style={styles.comic}
+                        source={{ uri: item.thumbnail }}
+                      />
+                    </View>
+                  );
+                }}
+              />
             </View>
           );
         }}

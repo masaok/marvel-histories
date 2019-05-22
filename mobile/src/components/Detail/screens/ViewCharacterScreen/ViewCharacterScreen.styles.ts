@@ -29,20 +29,51 @@ export default StyleSheet.create({
     marginLeft: 5
   },
   page: {
+    backgroundColor: Colors.orange,
     flexDirection: "column",
     alignItems: "center",
-    backgroundColor: Colors.orange,
     flex: 1
   },
-  characterPortrait: {
+  characterImageBox: {
+    backgroundColor: Colors.lightOrange,
+    borderRadius: 2,
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "#000000",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: Colors.orange,
-    height: 300,
-    width: 300
+    margin: 20,
+    height: 250,
+    width: 250
   },
   characterImage: {
     width: 200,
     height: 200
+  },
+  descriptionBox: {
+    backgroundColor: Colors.lightOrange,
+    borderRadius: 2,
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "#000000",
+    justifyContent: "center",
+    width: 350,
+    height: 150
+  },
+  description: {
+    textAlign: "center"
+  },
+  comicListBox: {
+    flex: 1,
+    backgroundColor: Colors.lightOrange
+    // margin: 20
+  },
+  comicList: {
+    width: 20,
+    height: 20
+  },
+  comic: {
+    width: 10,
+    height: 10
   }
 });
