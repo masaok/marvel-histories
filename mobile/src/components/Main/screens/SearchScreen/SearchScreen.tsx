@@ -47,9 +47,7 @@ export default class SearchScreen extends React.Component<Props, State> {
               name
               description
               thumbnail
-              comics {
-                name
-              }
+              id
             }
           }
         `}
