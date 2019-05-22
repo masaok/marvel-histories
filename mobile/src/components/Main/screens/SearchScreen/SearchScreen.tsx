@@ -43,7 +43,7 @@ export default class SearchScreen extends React.Component<Props, State> {
         variables={{ name: this.state.name }}
         query={gql`
           query heroFind($name: String) {
-            getCharacter(where: { name: $name }) {
+            characters(where: { nameStartsWith: $name }) {
               name
               description
               thumbnail
@@ -73,14 +73,14 @@ export default class SearchScreen extends React.Component<Props, State> {
               />
               {data && (
                 <FlatList
-                  data={[data.getCharacter]}
+                  data={data.characters}
                   keyExtractor={this._keyExtractor}
                   renderItem={({ item }) => {
                     return (
                       <TouchableWithoutFeedback
                         onPress={() =>
                           NavigationService.navigate("Timelines", {
-                            character: data.getCharacter
+                            character: item
                           })
                         }
                       >
