@@ -29,14 +29,16 @@ export default class CharacterTimelineScreen extends React.Component<
     // TODO: But for now, let's mock it
     // TODO: Add a thumbnail here
     const character = {
-      id: 1009313
+      id: 1009313,
+      name: "Gambit",
+      thumbnail: "http://i.annihil.us/u/prod/marvel/i/mg/a/40/52696aa8aee99.jpg",
     }
     return (
       <Query
         query={gql`
           {
             # TODO: need to mock this ID similar to how a user would navigate here from another page
-            comics(where: { characters: [1009313] }, orderBy: focDate_asc, limit: 10 ) {
+            comics(where: { characters: [${character.id}] }, orderBy: focDate_asc, limit: 10 ) {
               id
               title
               thumbnail
@@ -72,14 +74,14 @@ export default class CharacterTimelineScreen extends React.Component<
                       onPress={() => {
                         toggleSaveCharacterTimeline({
                           // TODO: need to save more info (thumbnail, etc) at this point
-                          variables: { character: { id: 1009313 } }
+                          variables: { character: { id: character.id } }
                         })
                       }}
                       // title="TEST"
                       title={
                         data.savedCharacterTimelines
                           .map(char => char.id)
-                          .indexOf(1009313) > -1
+                          .indexOf(character.id) > -1
                           ? 'Unsave Timeline'
                           : 'Save Timeline'
                       }
