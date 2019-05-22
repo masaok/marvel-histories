@@ -38,7 +38,7 @@ const client = new ApolloClient({
           cache.writeData({ data: { likedCharacter: character } });
           return null;
         },
-        addMultiLike: (_, { character }, { cache }) => {
+        toggleLikedCharacter: (_, { character }, { cache }) => {
 
           character.__typename = 'Character'; // must give typename (required by Apollo client)
 
@@ -46,6 +46,8 @@ const client = new ApolloClient({
             query GetLikedCharacters {
               likedCharacters @client {
                 id
+                name
+                thumbnail
               }
             }
           `;
