@@ -10,9 +10,9 @@ import styles from "./HomeScreen.styles";
 import MainScreenHeader from "../../../shared/Headers/MainScreenHeader";
 import SubScreenHeader from "../../../shared/Headers/SubScreenHeader";
 
-export interface Props {}
+export interface Props { }
 
-interface State {}
+interface State { }
 
 export default class HomeScreen extends React.Component<Props, State> {
   static navigationOptions = {
@@ -29,6 +29,11 @@ export default class HomeScreen extends React.Component<Props, State> {
               id
               name
               description
+              thumbnail
+            }
+            likedCharacters @client {
+              id
+              name
               thumbnail
             }
           }
@@ -48,12 +53,45 @@ export default class HomeScreen extends React.Component<Props, State> {
               keyExtractor={this._keyExtractor}
               renderItem={({ item }) => {
                 return (
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                     <Image
-                      style={{ width: 50, height: 50 }}
+                      style={{ width: 50, height: 50, margin: 5, borderRadius: 10 }}
                       source={{ uri: item.thumbnail }}
                     />
-                    <Text>{item.name}</Text>
+                    <Text style={{
+                      marginLeft: 5,
+                      marginRight: "auto",
+                      // backgroundColor: "yellow"
+                    }}>{item.name}</Text>
+                    {/* TODO: View Timeline button? */}
+                    {/* TODO: Save/Like button? */}
+                    <View style={{
+                      // backgroundColor: "red" 
+                    }}>
+                      <Button
+                        onPress={() => {
+                          toggleLikedCharacter({
+                            variables: {
+                              character: {
+                                id: item.id,
+                                name: item.name,
+                                thumbnail: item.thumbnail,
+                              }
+                            }
+                          })
+                        }}
+                        // title="TEST"
+                        title={
+                          data.likedCharacters
+                            .map(char => char.id)
+                            .indexOf(item.id) > -1
+                            ? 'Unlike'
+                            : 'Like'
+                        }
+                        color='#841584'
+                        accessibilityLabel='Learn more about this button'
+                      />
+                    </View>
                   </View>
                 );
               }}

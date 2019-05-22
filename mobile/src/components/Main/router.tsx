@@ -80,7 +80,7 @@ export const MainTabsNavigator = createBottomTabNavigator(
       screen: CharacterTimelineScreen,
       navigationOptions: {
         title: `Character Timeline`,
-        tabBarLabel: "Character Timeline",
+        tabBarLabel: "Char TL",
         tabBarIcon: ({ tintColor = "" }) => (
           <Icon
             type="material-community"
@@ -97,7 +97,7 @@ export const MainTabsNavigator = createBottomTabNavigator(
       screen: BrowseTimelinesScreen,
       navigationOptions: {
         title: `Browse Timelines`,
-        tabBarLabel: "Browse Timelines",
+        tabBarLabel: "Browse TLs",
         tabBarIcon: ({ tintColor = "" }) => (
           <Icon
             type="material-community"

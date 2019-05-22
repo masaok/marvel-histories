@@ -75,7 +75,6 @@ export default class CharacterTimelineScreen extends React.Component<
                     <Button
                       onPress={() => {
                         toggleSaveCharacterTimeline({
-                          // TODO: need to save more info (thumbnail, etc) at this point
                           variables: {
                             character: {
                               id: character.id,
