@@ -35,16 +35,14 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
 
   render() {
     const character = this.props.navigation.getParam("character");
-
     return (
       <Query
-        skip={character.name === null}
-        variables={{ name: character.name }}
+        skip={character.id === null}
+        variables={{ id: character.id }}
         query={gql`
-          query characterFind($name: String) {
-            getCharacter(where: { name: $name }) {
-              id
-              name
+          query comicFind($id: ID!) {
+            comics(where: { characters: [$id] }) {
+              title
             }
           }
         `}
@@ -58,19 +56,16 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
             );
           }
 
+          // console.log(data);
+
           return (
-            <View>
-              <View
-                style={{
-                  flexDirection: "column",
-                  alignItems: "center"
-                }}
-              >
+            <View style={styles.page}>
+              <View style={styles.characterPortrait}>
                 <Image
-                  style={styles.characterPortrait}
+                  style={styles.characterImage}
                   source={{ uri: character.thumbnail }}
                 />
-                <Text> {JSON.stringify(character.description)} </Text>
+
                 <View
                   style={{
                     flexDirection: "row"

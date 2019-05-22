@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { Colors } from "../../../../assets";
 
 export default StyleSheet.create({
   container: {
@@ -27,7 +28,20 @@ export default StyleSheet.create({
     alignItems: "center",
     marginLeft: 5
   },
+  page: {
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: Colors.orange,
+    flex: 1
+  },
   characterPortrait: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: Colors.orange,
+    height: 300,
+    width: 300
+  },
+  characterImage: {
     width: 200,
     height: 200
   }
