@@ -1,16 +1,30 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, AsyncStorage } from 'react-native';
 import { ApolloProvider } from 'react-apollo';
-import ApolloClient, { gql } from 'apollo-boost';
+import ApolloClient, { gql, InMemoryCache, NormalizedCacheObject } from 'apollo-boost';
 import { NavigationContainerComponent } from 'react-navigation';
 import { AppContainer } from './router';
 import NavigationService from '../services/NavigationService';
 
-// const client = new ApolloClient({
-//   uri: 'http://localhost:4000/graphql'
-// });
+import { persistCache, CachePersistor } from 'apollo-cache-persist';
+import { PersistentStorage, PersistedData } from 'apollo-cache-persist/types';
+
+// Persist the cache through reload: https://github.com/apollographql/apollo-cache-persist
+const cache = new InMemoryCache();
+
+persistCache({
+  cache,
+  debug: true,
+  debounce: 200,
+
+  // TypeScript workaround: https://github.com/apollographql/apollo-cache-persist/issues/75
+  storage: AsyncStorage as PersistentStorage<
+    PersistedData<NormalizedCacheObject>
+  >,
+});
 
 const client = new ApolloClient({
+  cache,
   uri: 'http://localhost:4000/graphql',
   clientState: {
     defaults: {
