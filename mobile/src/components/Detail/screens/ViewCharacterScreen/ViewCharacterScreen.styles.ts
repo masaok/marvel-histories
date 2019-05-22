@@ -65,15 +65,19 @@ export default StyleSheet.create({
   },
   comicListBox: {
     flex: 1,
-    backgroundColor: Colors.lightOrange
-    // margin: 20
+    margin: 10
   },
   comicList: {
-    width: 20,
-    height: 20
+    backgroundColor: Colors.lightOrange,
+    borderRadius: 2,
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "#000000",
+    margin: 10
   },
   comic: {
-    width: 10,
-    height: 10
+    margin: 10,
+    width: 80,
+    height: 120
   }
 });

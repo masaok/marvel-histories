@@ -71,16 +71,17 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
               </View>
               <FlatList
                 horizontal={false}
-                numColumns={4}
-                style={styles.comicList}
+                numColumns={3}
+                style={styles.comicListBox}
                 data={data.comics}
                 keyExtractor={this._keyExtractor}
                 renderItem={({ item }) => {
                   return (
-                    <View>
+                    <View style={styles.comicList}>
                       <Image
                         style={styles.comic}
                         source={{ uri: item.thumbnail }}
+                        resizeMode="contain"
                       />
                     </View>
                   );
