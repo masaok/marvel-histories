@@ -9,8 +9,11 @@ import styles from './CharacterTimelineScreen.styles';
 import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import MainScreenHeader from '../../../shared/Headers/MainScreenHeader';
+import { NavigationScreenProp } from 'react-navigation';
 
-export interface Props { }
+export interface Props {
+  navigation: NavigationScreenProp<{}>;
+}
 
 interface State { }
 
@@ -23,16 +26,17 @@ export default class CharacterTimelineScreen extends React.Component<
   };
   _keyExtractor = item => item.id;
   render() {
-    // TODO: This is probably how the character will be incoming from a previous page
-    // const character = this.props.navigation.getParam("character");
+    const characterParam = this.props.navigation.getParam("character");
 
-    // TODO: But for now, let's mock it
-    // TODO: Add a thumbnail here
-    const character = {
+    // Mock
+    const characterMock = {
       id: 1009313,
       name: "Gambit",
       thumbnail: "http://i.annihil.us/u/prod/marvel/i/mg/a/40/52696aa8aee99.jpg",
     }
+
+    // Default to incoming param, otherwise use the mock
+    const character = characterParam ? characterParam : characterMock;
     return (
       <Query
         query={gql`
