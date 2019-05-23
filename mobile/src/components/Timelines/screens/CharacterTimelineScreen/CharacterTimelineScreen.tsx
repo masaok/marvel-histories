@@ -19,7 +19,11 @@ export interface Props {
 interface State {
   text: String,
   name: String | null,
-  character: Object,
+  character: {
+    id: Number,
+    name: String,
+    thumbnail: String,
+  }
 }
 
 export default class CharacterTimelineScreen extends React.Component<
@@ -105,7 +109,6 @@ export default class CharacterTimelineScreen extends React.Component<
                       <Text style={{
                         marginLeft: 5,
                         marginRight: "auto",
-                        // backgroundColor: "yellow"
                       }}>{character.name}</Text>
                     </View>
 

@@ -156,9 +156,7 @@ export default class App extends React.Component {
                       <View style={styles.row} key={item.id}>
                         <Image
                           style={{ width: 50, height: 50 }}
-                          source={{
-                            uri: item.thumbnail,
-                          }}
+                          source={{ uri: item.thumbnail }}
                         />
                         <Text style={styles.name}>{item.name}</Text>
                         <Query

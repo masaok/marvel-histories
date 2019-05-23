@@ -75,7 +75,6 @@ export default class HomeScreen extends React.Component<Props, State> {
                             // backgroundColor: "yellow"
                           }}>{item.name}</Text>
                           <View style={{
-                            // backgroundColor: "red" 
                           }}>
                             <Button
                               onPress={() => {
