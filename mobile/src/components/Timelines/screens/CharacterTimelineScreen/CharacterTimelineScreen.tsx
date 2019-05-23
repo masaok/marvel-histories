@@ -10,23 +10,33 @@ import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import MainScreenHeader from '../../../shared/Headers/MainScreenHeader';
 import { NavigationScreenProp } from 'react-navigation';
+import SubScreenHeader from '../../../shared/Headers/SubScreenHeader';
 
 export interface Props {
   navigation: NavigationScreenProp<{}>;
 }
 
-interface State { }
+interface State {
+  text: String,
+  name: String | null,
+  character: Object,
+}
 
 export default class CharacterTimelineScreen extends React.Component<
   Props,
   State
   > {
   static navigationOptions = {
-    header: props => <MainScreenHeader {...props} />,
+    header: props => {
+      return (<SubScreenHeader title={"Character Timeline"} {...props} />)
+    }
   };
   _keyExtractor = item => item.id;
-  render() {
-    const characterParam = this.props.navigation.getParam("character");
+
+  constructor(props) {
+    super(props);
+
+    const characterParam = props.navigation.getParam("character");
 
     // Mock
     const characterMock = {
@@ -37,6 +47,17 @@ export default class CharacterTimelineScreen extends React.Component<
 
     // Default to incoming param, otherwise use the mock
     const character = characterParam ? characterParam : characterMock;
+
+    this.state = {
+      text: "Iron Man",
+      name: null,
+      character
+    };
+  }
+
+  render() {
+    const { character } = this.state
+
     return (
       <Query
         query={gql`
@@ -76,6 +97,18 @@ export default class CharacterTimelineScreen extends React.Component<
                 console.log(data.savedCharacterTimelines)
                 return (
                   <View>
+                    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                      <Image
+                        style={styles.thumbnail}
+                        source={{ uri: character.thumbnail }}
+                      />
+                      <Text style={{
+                        marginLeft: 5,
+                        marginRight: "auto",
+                        // backgroundColor: "yellow"
+                      }}>{character.name}</Text>
+                    </View>
+
                     <Button
                       onPress={() => {
                         toggleSaveCharacterTimeline({
