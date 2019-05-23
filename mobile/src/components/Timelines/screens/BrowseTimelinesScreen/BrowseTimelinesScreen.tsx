@@ -3,7 +3,7 @@
  */
 
 import * as React from 'react';
-import { Text, View, Button, FlatList, Image } from 'react-native';
+import { Text, View, Button, FlatList, Image, StyleSheet } from 'react-native';
 
 import styles from './BrowseTimelinesScreen.styles';
 import MainScreenHeader from '../../../shared/Headers/MainScreenHeader';
@@ -21,7 +21,7 @@ export default class BrowseTimelinesScreen extends React.Component<
   static navigationOptions = {
     header: props => <MainScreenHeader {...props} />,
   };
-  _keyExtractor = item => item.toString(); // https://github.com/facebook/react-native/issues/18291
+  _keyExtractor = item => item.id.toString() // must convert to string to avoid warning
   render() {
     return (
       <Query
@@ -63,25 +63,44 @@ export default class BrowseTimelinesScreen extends React.Component<
               {toggleCharacterTimelineSave => {
                 console.log("SAVED CHAR TIMELINES:")
                 console.log(data.savedCharacterTimelines)
+
+                // Sort Liked Characters by name
+                const compare = (a, b) => {
+                  if (a.name < b.name) {
+                    return -1;
+                  }
+                  if (a.name > b.name) {
+                    return 1;
+                  }
+                  return 0;
+                }
+                data.likedCharacters.sort(compare)
+                data.savedCharacterTimelines.sort(compare)
+
                 return (
                   <View>
-                    <Text>Browse Timelines</Text>
+                    <Text style={styles.subtitle}>Liked Characters</Text>
                     <FlatList
                       data={data.likedCharacters}
                       keyExtractor={this._keyExtractor}
                       renderItem={({ item }) => {
                         return (
-                          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                          <View style={styles.listRow}>
                             <Image
                               style={styles.thumbnail}
                               source={{ uri: item.thumbnail }}
                             />
                             <Text style={styles.name}>{item.name}</Text>
+                            <Button
+                              onPress={() => { }}
+                              title="View"
+                              color='#841584'
+                            />
                           </View>
                         );
                       }}
                     />
-                    <Text>Browse Timelines</Text>
+                    <Text style={styles.subtitle}>Liked Series</Text>
                     <FlatList
                       data={data.savedCharacterTimelines}
                       keyExtractor={this._keyExtractor}

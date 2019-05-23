@@ -1,12 +1,12 @@
 /**
- * HomeScreen
+ * SeriesScreen
  */
 
 import * as React from "react";
 import { Button, Image, FlatList, StyleSheet, Text, View } from "react-native";
 import { Query, Mutation } from "react-apollo";
 import { gql } from "apollo-boost";
-import styles from "./HomeScreen.styles";
+import styles from "./SeriesScreen.styles";
 import MainScreenHeader from "../../../shared/Headers/MainScreenHeader";
 import SubScreenHeader from "../../../shared/Headers/SubScreenHeader";
 

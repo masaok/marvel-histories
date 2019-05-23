@@ -13,6 +13,7 @@ import BrowseTimelinesScreen from "../Timelines/screens/BrowseTimelinesScreen";
 import ViewCharacterScreen from "../Detail/screens/ViewCharacterScreen";
 import CharacterTimelineScreen from "../Timelines/screens/CharacterTimelineScreen";
 import { Colors } from "../../assets";
+import SeriesScreen from "./screens/SeriesScreen";
 
 const HomeNavigator = createStackNavigator({ Home: HomeScreen });
 const SearchNavigator = createStackNavigator({ Search: SearchScreen });
@@ -37,6 +38,22 @@ export const MainTabsNavigator = createBottomTabNavigator(
       navigationOptions: {
         title: `Home`,
         tabBarLabel: "Home",
+        tabBarIcon: ({ tintColor = "" }) => (
+          <Icon
+            type="material-community"
+            name="home"
+            size={35}
+            color={tintColor}
+          />
+        )
+      }
+    },
+
+    Series: {
+      screen: SeriesScreen,
+      navigationOptions: {
+        title: `Series`,
+        tabBarLabel: "Series",
         tabBarIcon: ({ tintColor = "" }) => (
           <Icon
             type="material-community"
