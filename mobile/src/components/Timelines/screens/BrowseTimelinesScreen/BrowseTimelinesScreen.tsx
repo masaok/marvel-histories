@@ -79,7 +79,7 @@ export default class BrowseTimelinesScreen extends React.Component<
 
                 return (
                   <View>
-                    <Text style={styles.subtitle}>Liked Characters</Text>
+                    <Text style={styles.subtitle}>Saved Character Timelines</Text>
                     <FlatList
                       data={data.likedCharacters}
                       keyExtractor={this._keyExtractor}
@@ -100,7 +100,7 @@ export default class BrowseTimelinesScreen extends React.Component<
                         );
                       }}
                     />
-                    <Text style={styles.subtitle}>Liked Series</Text>
+                    <Text style={styles.subtitle}>Saved Series Timelines</Text>
                     <FlatList
                       data={data.savedCharacterTimelines}
                       keyExtractor={this._keyExtractor}

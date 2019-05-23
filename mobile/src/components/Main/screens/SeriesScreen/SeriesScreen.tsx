@@ -16,7 +16,7 @@ interface State { }
 
 export default class HomeScreen extends React.Component<Props, State> {
   static navigationOptions = {
-    header: props => <MainScreenHeader {...props} />
+    header: props => <MainScreenHeader title={"Browse Series"} {...props} />
   };
   _keyExtractor = item => item.id;
   render() {
@@ -25,10 +25,9 @@ export default class HomeScreen extends React.Component<Props, State> {
       <Query
         query={gql`
           {
-            characters(offset: 50) {
+            series {
               id
-              name
-              description
+              title
               thumbnail
             }
             likedCharacters @client {
@@ -59,7 +58,7 @@ export default class HomeScreen extends React.Component<Props, State> {
               {toggleLikedCharacter => {
                 return (
                   <FlatList
-                    data={data.characters}
+                    data={data.series}
                     keyExtractor={this._keyExtractor}
                     renderItem={({ item }) => {
                       return (
@@ -72,7 +71,7 @@ export default class HomeScreen extends React.Component<Props, State> {
                             marginLeft: 5,
                             marginRight: "auto",
                             // backgroundColor: "yellow"
-                          }}>{item.name}</Text>
+                          }}>{item.title}</Text>
                           <View style={{
                             // backgroundColor: "red" 
                           }}>
@@ -88,14 +87,7 @@ export default class HomeScreen extends React.Component<Props, State> {
                                   }
                                 })
                               }}
-                              // title="TEST"
-                              title={
-                                data.likedCharacters
-                                  .map(char => char.id)
-                                  .indexOf(item.id) > -1
-                                  ? 'Unlike'
-                                  : 'Like'
-                              }
+                              title="View"
                               color='#841584'
                               accessibilityLabel='Learn more about this button'
                             />

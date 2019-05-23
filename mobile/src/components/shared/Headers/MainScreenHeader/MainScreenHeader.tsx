@@ -12,12 +12,16 @@ import { Icon } from "react-native-elements";
 import { HeaderProps } from "react-navigation";
 import { Colors } from "../../../../assets";
 
-export interface Props extends HeaderProps {}
+export interface Props extends HeaderProps {
+  title: String
+}
 
-interface State {}
+interface State { }
 
 export default class MainScreenHeader extends React.Component<Props, State> {
   render() {
+    // console.log("MAIN SCREEN HEADER > props:")
+    // console.log(this.props.test)
     return (
       <BaseHeader
         backgroundColor={Colors.orange}
@@ -31,7 +35,7 @@ export default class MainScreenHeader extends React.Component<Props, State> {
               containerStyle={{ marginRight: 4 }}
             />
             <Heading type={"h7"} color={Colors.white} bold>
-              Marvel Histories
+              {this.props.title ? this.props.title : "Marvel Histories"}
             </Heading>
           </View>
         }

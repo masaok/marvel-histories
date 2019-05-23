@@ -9,6 +9,7 @@ import { gql } from "apollo-boost";
 import styles from "./HomeScreen.styles";
 import MainScreenHeader from "../../../shared/Headers/MainScreenHeader";
 import SubScreenHeader from "../../../shared/Headers/SubScreenHeader";
+import NavigationService from "../../../../services/NavigationService";
 
 export interface Props { }
 
@@ -96,6 +97,18 @@ export default class HomeScreen extends React.Component<Props, State> {
                                   ? 'Unlike'
                                   : 'Like'
                               }
+                              color='#841584'
+                              accessibilityLabel='Learn more about this button'
+                            />
+                          </View>
+                          <View>
+                            <Button
+                              onPress={() => {
+                                NavigationService.navigate("Timelines", {
+                                  character: item
+                                })
+                              }}
+                              title="View"
                               color='#841584'
                               accessibilityLabel='Learn more about this button'
                             />
