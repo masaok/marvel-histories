@@ -1,8 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, TextStyle, ViewStyle, TextStyleIOS } from 'react-native';
 
-import mainStyles from '../../main.styles';
-
-const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     backgroundColor: "#fff",
     alignItems: "center",
@@ -24,11 +22,13 @@ const styles = StyleSheet.create({
     marginRight: 5
   },
   name: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginLeft: 5
-  }
+    marginLeft: 5,
+    marginRight: "auto"
+  },
+  thumbnail: {
+    width: 50,
+    height: 50,
+    margin: 5,
+    borderRadius: 10
+  },
 });
-
-export default Object.assign(mainStyles, styles);

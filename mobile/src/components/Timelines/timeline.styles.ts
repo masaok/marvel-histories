@@ -1,6 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, TextStyle, ViewStyle, TextStyleIOS } from 'react-native';
 
-import mainStyles from '../../main.styles';
+import componentStyles from '../component.styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,4 +31,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Object.assign(mainStyles, styles);
+export default Object.assign(componentStyles, styles);

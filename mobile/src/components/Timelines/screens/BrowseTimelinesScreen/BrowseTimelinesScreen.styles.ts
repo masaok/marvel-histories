@@ -1,6 +1,8 @@
 import { StyleSheet } from "react-native";
 
-export default StyleSheet.create({
+import timelineStyles from '../../timeline.styles';
+
+const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     alignItems: 'center',
@@ -28,3 +30,5 @@ export default StyleSheet.create({
     marginLeft: 5
   }
 });
+
+export default Object.assign(timelineStyles, styles);

@@ -32,6 +32,11 @@ export default class BrowseTimelinesScreen extends React.Component<
               name
               thumbnail
             }
+            likedCharacters @client {
+              id
+              name
+              thumbnail
+            }
           }
         `}
       >
@@ -45,6 +50,8 @@ export default class BrowseTimelinesScreen extends React.Component<
           }
           data && console.log("SAVED CHAR TIMELINES:")
           data && console.log(data.savedCharacterTimelines)
+          data && console.log("LIKED CHARS:")
+          data && console.log(data.likedCharacters)
           return (
             // Fetch all characters (Saved Character Timelines)
             <Mutation mutation={gql`
@@ -60,16 +67,32 @@ export default class BrowseTimelinesScreen extends React.Component<
                   <View>
                     <Text>Browse Timelines</Text>
                     <FlatList
+                      data={data.likedCharacters}
+                      keyExtractor={this._keyExtractor}
+                      renderItem={({ item }) => {
+                        return (
+                          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Image
+                              style={styles.thumbnail}
+                              source={{ uri: item.thumbnail }}
+                            />
+                            <Text style={styles.name}>{item.name}</Text>
+                          </View>
+                        );
+                      }}
+                    />
+                    <Text>Browse Timelines</Text>
+                    <FlatList
                       data={data.savedCharacterTimelines}
                       keyExtractor={this._keyExtractor}
                       renderItem={({ item }) => {
                         return (
                           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Image
-                              style={{ width: 50, height: 50 }}
+                              style={styles.thumbnail}
                               source={{ uri: item.thumbnail }}
                             />
-                            <Text>{item.name}</Text>
+                            <Text style={styles.name}>{item.name}</Text>
                           </View>
                         );
                       }}

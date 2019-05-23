@@ -65,7 +65,7 @@ export default class HomeScreen extends React.Component<Props, State> {
                       return (
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                           <Image
-                            style={{ width: 50, height: 50, margin: 5, borderRadius: 10 }}
+                            style={styles.thumbnail}
                             source={{ uri: item.thumbnail }}
                           />
                           <Text style={{
