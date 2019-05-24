@@ -34,7 +34,7 @@ export default class SearchScreen extends React.Component<Props, State> {
   _keyExtractor = item => item.id;
   constructor(props) {
     super(props);
-    this.state = { text: "Iron Man", name: null };
+    this.state = { text: "Ice", name: null };
   }
   render() {
     return (
@@ -61,16 +61,18 @@ export default class SearchScreen extends React.Component<Props, State> {
             );
           }
           return (
-            <View>
+            <View style={styles.page}>
               <Text> Insert Character Name Below</Text>
-              <TextInput
-                style={{ height: 100, borderColor: "gray", borderWidth: 1 }}
-                onChangeText={text => this.setState({ text })}
-                value={this.state.text}
-                onSubmitEditing={() => {
-                  this.setState({ name: this.state.text });
-                }}
-              />
+              <View>
+                <TextInput
+                  style={styles.search}
+                  onChangeText={text => this.setState({ text })}
+                  value={this.state.text}
+                  onSubmitEditing={() => {
+                    this.setState({ name: this.state.text });
+                  }}
+                />
+              </View>
               {data && (
                 <FlatList
                   data={data.characters}

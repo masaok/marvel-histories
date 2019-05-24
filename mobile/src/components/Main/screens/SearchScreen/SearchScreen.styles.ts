@@ -26,5 +26,18 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginLeft: 5
-  }
+  },
+  page: {
+    flex: 1
+  },
+  searchBox: { flex: 1 },
+  search: {
+    fontSize: 32,
+    height: 100,
+    borderColor: "gray",
+    borderWidth: 1
+  },
+  characterListBox: {},
+  characterList: {},
+  character: {}
 });

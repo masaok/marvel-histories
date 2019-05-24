@@ -21,6 +21,8 @@ export interface Props {
 interface State {
   text: string;
   id: number | null;
+  limit: number;
+  offset: number;
 }
 
 export default class ViewCharacterScreen extends React.Component<Props, State> {
@@ -30,7 +32,7 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
   _keyExtractor = item => item.id;
   constructor(props) {
     super(props);
-    this.state = { text: "Thor", id: null };
+    this.state = { text: "Thor", id: null, offset: 0, limit: 1 };
   }
 
   render() {
@@ -38,10 +40,18 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
     return (
       <Query
         skip={character.id === null}
-        variables={{ id: character.id }}
+        variables={{
+          id: character.id,
+          offset: this.state.offset,
+          limit: this.state.limit
+        }}
         query={gql`
-          query comicFind($id: ID!) {
-            comics(where: { characters: [$id] }) {
+          query comicFind($id: ID!, $offset: Int, $limit: Int) {
+            comics(
+              where: { characters: [$id] }
+              offset: $offset
+              limit: $limit
+            ) {
               id
               title
               thumbnail
@@ -49,7 +59,7 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
           }
         `}
       >
-        {({ loading, data, error }: QueryResult) => {
+        {({ loading, data, error, fetchMore }: QueryResult) => {
           if (loading || error) {
             return (
               <View style={styles.container}>
@@ -75,6 +85,24 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
                 style={styles.comicListBox}
                 data={data.comics}
                 keyExtractor={this._keyExtractor}
+                onEndReachedThreshold={0.01}
+                onEndReached={() =>
+                  fetchMore({
+                    variables: {
+                      offset: data.comics.length + 1
+                    },
+                    updateQuery: (previousResult, { fetchMoreResult }) => {
+                      if (fetchMoreResult.length === 0) {
+                        return;
+                      }
+                      return {
+                        comics: previousResult.comics.concat(
+                          fetchMoreResult.comics
+                        )
+                      };
+                    }
+                  })
+                }
                 renderItem={({ item }) => {
                   return (
                     <View style={styles.comicList}>

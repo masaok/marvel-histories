@@ -1,13 +1,17 @@
-import React from 'react';
-import { View, AsyncStorage } from 'react-native';
-import { ApolloProvider } from 'react-apollo';
-import ApolloClient, { gql, InMemoryCache, NormalizedCacheObject } from 'apollo-boost';
-import { NavigationContainerComponent } from 'react-navigation';
-import { AppContainer } from './router';
-import NavigationService from '../services/NavigationService';
+import React from "react";
+import { View, AsyncStorage } from "react-native";
+import { ApolloProvider } from "react-apollo";
+import ApolloClient, {
+  gql,
+  InMemoryCache,
+  NormalizedCacheObject
+} from "apollo-boost";
+import { NavigationContainerComponent } from "react-navigation";
+import { AppContainer } from "./router";
+import NavigationService from "../services/NavigationService";
 
-import { persistCache, CachePersistor } from 'apollo-cache-persist';
-import { PersistentStorage, PersistedData } from 'apollo-cache-persist/types';
+import { persistCache, CachePersistor } from "apollo-cache-persist";
+// import { PersistentStorage, PersistedData } from 'apollo-cache-persist/types';
 
 // Persist the cache through reload: https://github.com/apollographql/apollo-cache-persist
 const cache = new InMemoryCache();
@@ -20,28 +24,28 @@ persistCache({
   // TypeScript workaround: https://github.com/apollographql/apollo-cache-persist/issues/75
   storage: AsyncStorage as PersistentStorage<
     PersistedData<NormalizedCacheObject>
-  >,
+  >
 });
 
 const client = new ApolloClient({
   cache,
-  uri: 'http://localhost:4000/graphql',
+  uri: "http://localhost:4000/graphql",
   clientState: {
     defaults: {
       isConnected: true,
       // likes: [] // character ID's liked by the user
       likedCharacter: {
         id: null,
-        __typename: 'Character',
+        __typename: "Character"
       },
       likedCharacters: [],
-      savedCharacterTimelines: [],
+      savedCharacterTimelines: []
     },
     resolvers: {
       Query: {
         fetchCharacters: (_, { characters }, { client }) => {
           // Given the array of characters, query the API for each character to get its thumbnail
-        },
+        }
       },
       Mutation: {
         updateNetworkStatus: (_, { isConnected }, { cache }) => {
@@ -53,8 +57,7 @@ const client = new ApolloClient({
           return null;
         },
         toggleLikedCharacter: (_, { character }, { cache }) => {
-
-          character.__typename = 'Character'; // must give typename (required by Apollo client)
+          character.__typename = "Character"; // must give typename (required by Apollo client)
 
           const query = gql`
             query GetLikedCharacters {
@@ -80,7 +83,7 @@ const client = new ApolloClient({
           }
 
           const data = {
-            likedCharacters,
+            likedCharacters
           };
 
           // you can also do cache.writeData({ data }) here if you prefer
@@ -89,11 +92,10 @@ const client = new ApolloClient({
           return data;
         },
         toggleSaveCharacterTimeline: (_, { character }, { cache }) => {
+          console.log("TOGGLE > CHARACTER:");
+          console.log(character);
 
-          console.log("TOGGLE > CHARACTER:")
-          console.log(character)
-
-          character.__typename = 'Character'; // must give typename (required by Apollo client)
+          character.__typename = "Character"; // must give typename (required by Apollo client)
 
           // Query to fetch current data
           const query = gql`
@@ -119,26 +121,28 @@ const client = new ApolloClient({
 
           // Either concat or splice the mutable variable prepared above
           if (index < 0) {
-            savedCharacterTimelines = savedCharacterTimelines.concat([character]);
+            savedCharacterTimelines = savedCharacterTimelines.concat([
+              character
+            ]);
           } else {
             savedCharacterTimelines.splice(index, 1);
           }
 
           // Data must a separate hash (cannot be inline in writeQuery)
           const data = {
-            savedCharacterTimelines,
+            savedCharacterTimelines
           };
 
-          console.log("TOGGLE > DATA:")
-          console.log(data)
+          console.log("TOGGLE > DATA:");
+          console.log(data);
 
           cache.writeQuery({ query, data });
 
           return data;
-        },
-      },
-    },
-  },
+        }
+      }
+    }
+  }
 });
 
 export default class App extends React.Component {

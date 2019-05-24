@@ -127,13 +127,3 @@ export const MainTabsNavigator = createBottomTabNavigator(
     }
   }
 );
-
-// MainTabsNavigator.navigationOptions = ({ navigation }) => {
-//   const component = MainTabsNavigator.router.getComponentForState(
-//     navigation.state
-//   );
-//   if (typeof component.navigationOptions === 'function') {
-//     return component.navigationOptions({ navigation });
-//   }
-//   return component.navigationOptions;
-// };
