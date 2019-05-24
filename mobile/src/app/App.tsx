@@ -16,18 +16,6 @@ import { PersistentStorage, PersistedData } from "apollo-cache-persist/types";
 // Persist the cache through reload: https://github.com/apollographql/apollo-cache-persist
 const cache = new InMemoryCache();
 
-<<<<<<< Updated upstream
-// persistCache({
-//   cache,
-//   debug: true,
-//   debounce: 200,
-
-//   // TypeScript workaround: https://github.com/apollographql/apollo-cache-persist/issues/75
-//   storage: AsyncStorage as PersistentStorage<
-//     PersistedData<NormalizedCacheObject>
-//   >
-// });
-=======
 const persistor = new CachePersistor(
   {
     cache,
@@ -40,7 +28,6 @@ const persistor = new CachePersistor(
     >
   }
 );
->>>>>>> Stashed changes
 
 const client = new ApolloClient({
   cache,
@@ -160,10 +147,14 @@ const client = new ApolloClient({
   }
 });
 
+// https://github.com/apollographql/apollo-cache-persist/issues/34#issuecomment-371177206
 // persistor.purge()
 // persistor.remove()
 // client.resetStore()
-client.clearStore()
+
+// https://github.com/apollographql/apollo-cache-persist/issues/34#issuecomment-429349279
+// https://www.apollographql.com/docs/react/recipes/authentication#login-logout
+// client.clearStore()
 
 export default class App extends React.Component {
   render() {
