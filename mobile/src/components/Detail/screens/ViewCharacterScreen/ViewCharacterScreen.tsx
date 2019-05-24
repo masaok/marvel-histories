@@ -3,7 +3,7 @@
  */
 
 import * as React from "react";
-import { Text, View, Image, TextInput, FlatList } from "react-native";
+import { Text, View, Image, TextInput, FlatList, Button } from "react-native";
 
 import styles from "./ViewCharacterScreen.styles";
 
@@ -11,6 +11,7 @@ import { Query, QueryResult, compose, graphql } from "react-apollo";
 import { gql } from "apollo-boost";
 import SubScreenHeader from "../../../shared/Headers/SubScreenHeader";
 import { NavigationScreenProp } from "react-navigation";
+import NavigationService from "../../../../services/NavigationService";
 
 const { find, filter } = require("lodash");
 
@@ -37,6 +38,8 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
 
   render() {
     const character = this.props.navigation.getParam("character");
+    console.log("CHARACTER:")
+    console.log(character)
     return (
       <Query
         skip={character.id === null}
@@ -114,6 +117,16 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
                     </View>
                   );
                 }}
+              />
+              <Button
+                onPress={() => {
+                  NavigationService.navigate("CharacterTimeline", {
+                    character
+                  })
+                }}
+                title="View Character Timeline"
+                color='#841584'
+                accessibilityLabel='Learn more about this button'
               />
             </View>
           );

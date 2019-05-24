@@ -31,4 +31,14 @@ export default StyleSheet.create({
     margin: 5,
     borderRadius: 10
   },
+  subtitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    margin: 5,
+  },
+
+  // Home, Browse
+  listRow: {
+    flexDirection: "row", alignItems: "center", justifyContent: "space-between"
+  }
 });

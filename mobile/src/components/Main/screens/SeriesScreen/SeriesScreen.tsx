@@ -1,15 +1,14 @@
 /**
- * HomeScreen
+ * SeriesScreen
  */
 
 import * as React from "react";
 import { Button, Image, FlatList, StyleSheet, Text, View } from "react-native";
 import { Query, Mutation } from "react-apollo";
 import { gql } from "apollo-boost";
-import styles from "./HomeScreen.styles";
+import styles from "./SeriesScreen.styles";
 import MainScreenHeader from "../../../shared/Headers/MainScreenHeader";
 import SubScreenHeader from "../../../shared/Headers/SubScreenHeader";
-import NavigationService from "../../../../services/NavigationService";
 
 export interface Props { }
 
@@ -17,7 +16,7 @@ interface State { }
 
 export default class HomeScreen extends React.Component<Props, State> {
   static navigationOptions = {
-    header: props => <MainScreenHeader {...props} />
+    header: props => <MainScreenHeader title={"Browse Series"} {...props} />
   };
   _keyExtractor = item => item.id;
   render() {
@@ -26,10 +25,9 @@ export default class HomeScreen extends React.Component<Props, State> {
       <Query
         query={gql`
           {
-            characters(offset: 50) {
+            series {
               id
-              name
-              description
+              title
               thumbnail
             }
             likedCharacters @client {
@@ -48,6 +46,8 @@ export default class HomeScreen extends React.Component<Props, State> {
               </View>
             );
           }
+          data && console.log("HOME SCREEN > DATA LIKED CHARACTERS:")
+          data && console.log(data.likedCharacters)
           return (
             <Mutation mutation={gql`
                 mutation TOGGLE_LIKED_CHARACTER($character: Character!) {
@@ -58,7 +58,7 @@ export default class HomeScreen extends React.Component<Props, State> {
               {toggleLikedCharacter => {
                 return (
                   <FlatList
-                    data={data.characters}
+                    data={data.series}
                     keyExtractor={this._keyExtractor}
                     renderItem={({ item }) => {
                       return (
@@ -71,8 +71,9 @@ export default class HomeScreen extends React.Component<Props, State> {
                             marginLeft: 5,
                             marginRight: "auto",
                             // backgroundColor: "yellow"
-                          }}>{item.name}</Text>
+                          }}>{item.title}</Text>
                           <View style={{
+                            // backgroundColor: "red" 
                           }}>
                             <Button
                               onPress={() => {
@@ -84,25 +85,6 @@ export default class HomeScreen extends React.Component<Props, State> {
                                       thumbnail: item.thumbnail,
                                     }
                                   }
-                                })
-                              }}
-                              // title="TEST"
-                              title={
-                                data.likedCharacters
-                                  .map(char => char.id)
-                                  .indexOf(item.id) > -1
-                                  ? 'Unlike'
-                                  : 'Like'
-                              }
-                              color='#841584'
-                              accessibilityLabel='Learn more about this button'
-                            />
-                          </View>
-                          <View>
-                            <Button
-                              onPress={() => {
-                                NavigationService.navigate("Timelines", {
-                                  character: item
                                 })
                               }}
                               title="View"

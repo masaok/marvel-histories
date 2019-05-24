@@ -1,14 +1,13 @@
 /**
- * CharacterTimelineScreen
+ * MyTimelinesScreen
  */
 
 import * as React from 'react';
 import { Text, View, FlatList, Image, Button } from 'react-native';
 
-import styles from './CharacterTimelineScreen.styles';
+import styles from './MyTimelinesScreen.styles';
 import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import MainScreenHeader from '../../../shared/Headers/MainScreenHeader';
 import { NavigationScreenProp } from 'react-navigation';
 import SubScreenHeader from '../../../shared/Headers/SubScreenHeader';
 
@@ -26,13 +25,13 @@ interface State {
   }
 }
 
-export default class CharacterTimelineScreen extends React.Component<
+export default class MyTimelinesScreen extends React.Component<
   Props,
   State
   > {
   static navigationOptions = {
     header: props => {
-      return (<SubScreenHeader title={"Character Timeline"} {...props} />)
+      return (<SubScreenHeader title={"My Timelines"} {...props} />)
     }
   };
   _keyExtractor = item => item.id;
@@ -111,55 +110,6 @@ export default class CharacterTimelineScreen extends React.Component<
                         marginRight: "auto",
                       }}>{character.name}</Text>
                     </View>
-
-                    <Button
-                      onPress={() => {
-                        toggleSaveCharacterTimeline({
-                          variables: {
-                            character: {
-                              id: character.id,
-                              name: character.name,
-                              thumbnail: character.thumbnail,
-                            }
-                          }
-                        })
-                      }}
-                      // title="TEST"
-                      title={
-                        data.savedCharacterTimelines
-                          .map(char => char.id)
-                          .indexOf(character.id) > -1
-                          ? 'Unsave Timeline'
-                          : 'Save Timeline'
-                      }
-                      color='#841584'
-                      accessibilityLabel='Learn more about this button'
-                    />
-                    <FlatList
-                      data={data.comics}
-                      keyExtractor={this._keyExtractor}
-                      renderItem={({ item }) => {
-
-                        // Parse and convert the date info for display
-                        const onsaleDate = item.dates[0].date
-                        const substring = onsaleDate.substring(0, 19)
-                        const obj = new Date(substring)
-                        const displayDay = obj.getDate() + 1
-                        const displayMonth = obj.getMonth() + 1
-                        const displayFullYear = obj.getFullYear() + 1
-
-                        return (
-                          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Text>{displayMonth}/{displayDay}/{displayFullYear}</Text>
-                            <Image
-                              style={{ width: 50, height: 50 }}
-                              source={{ uri: item.thumbnail }}
-                            />
-                            <Text>{item.title}</Text>
-                          </View>
-                        );
-                      }}
-                    />
                   </View>
                 )
               }}
