@@ -34,11 +34,26 @@ export default StyleSheet.create({
   subtitle: {
     fontSize: 20,
     fontWeight: "bold",
-    margin: 5,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 10,
   },
 
   // Home, Browse
   listRow: {
-    flexDirection: "row", alignItems: "center", justifyContent: "space-between"
-  }
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  listRowOutline: {
+    alignItems: "center",
+    borderWidth: 1,
+    borderRadius: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 10,
+    padding: 5,
+  },
 });
