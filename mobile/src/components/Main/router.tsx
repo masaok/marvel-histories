@@ -14,6 +14,7 @@ import ViewCharacterScreen from "../Detail/screens/ViewCharacterScreen";
 import CharacterTimelineScreen from "../Timelines/screens/CharacterTimelineScreen";
 import { Colors } from "../../assets";
 import SeriesScreen from "./screens/SeriesScreen";
+import MyTimelinesScreen from "../Timelines/screens/MyTimelinesScreen";
 
 const HomeNavigator = createStackNavigator({ Home: HomeScreen });
 const SearchNavigator = createStackNavigator({ Search: SearchScreen });
@@ -115,6 +116,22 @@ export const MainTabsNavigator = createBottomTabNavigator(
       navigationOptions: {
         title: `Browse Timelines`,
         tabBarLabel: "Browse TLs",
+        tabBarIcon: ({ tintColor = "" }) => (
+          <Icon
+            type="material-community"
+            name="folder"
+            size={35}
+            color={tintColor}
+          />
+        )
+      }
+    },
+
+    MyTimelines: {
+      screen: MyTimelinesScreen,
+      navigationOptions: {
+        title: `My Timelines`,
+        tabBarLabel: "My TLs",
         tabBarIcon: ({ tintColor = "" }) => (
           <Icon
             type="material-community"

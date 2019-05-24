@@ -48,8 +48,6 @@ export default class HomeScreen extends React.Component<Props, State> {
               </View>
             );
           }
-          data && console.log("HOME SCREEN > DATA LIKED CHARACTERS:")
-          data && console.log(data.likedCharacters)
           return (
             <Mutation mutation={gql`
                 mutation TOGGLE_LIKED_CHARACTER($character: Character!) {
