@@ -16,16 +16,16 @@ import { persistCache, CachePersistor } from "apollo-cache-persist";
 // Persist the cache through reload: https://github.com/apollographql/apollo-cache-persist
 const cache = new InMemoryCache();
 
-persistCache({
-  cache,
-  debug: true,
-  debounce: 200,
+// persistCache({
+//   cache,
+//   debug: true,
+//   debounce: 200,
 
-  // TypeScript workaround: https://github.com/apollographql/apollo-cache-persist/issues/75
-  storage: AsyncStorage as PersistentStorage<
-    PersistedData<NormalizedCacheObject>
-  >
-});
+//   // TypeScript workaround: https://github.com/apollographql/apollo-cache-persist/issues/75
+//   storage: AsyncStorage as PersistentStorage<
+//     PersistedData<NormalizedCacheObject>
+//   >
+// });
 
 const client = new ApolloClient({
   cache,

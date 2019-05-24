@@ -13,8 +13,6 @@ import SubScreenHeader from "../../../shared/Headers/SubScreenHeader";
 import { NavigationScreenProp } from "react-navigation";
 import NavigationService from "../../../../services/NavigationService";
 
-const { find, filter } = require("lodash");
-
 export interface Props {
   navigation: NavigationScreenProp<{}>;
 }
@@ -33,13 +31,11 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
   _keyExtractor = item => item.id;
   constructor(props) {
     super(props);
-    this.state = { text: "Thor", id: null, offset: 0, limit: 1 };
+    this.state = { text: "Thor", id: null, offset: 0, limit: 15 };
   }
 
   render() {
     const character = this.props.navigation.getParam("character");
-    console.log("CHARACTER:")
-    console.log(character)
     return (
       <Query
         skip={character.id === null}
@@ -54,6 +50,7 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
               where: { characters: [$id] }
               offset: $offset
               limit: $limit
+              orderBy: title_asc
             ) {
               id
               title
@@ -70,7 +67,6 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
               </View>
             );
           }
-
           return (
             <View style={styles.page}>
               <View style={styles.characterImageBox}>
@@ -92,11 +88,11 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
                 onEndReached={() =>
                   fetchMore({
                     variables: {
-                      offset: data.comics.length + 1
+                      offset: data.comics.length
                     },
                     updateQuery: (previousResult, { fetchMoreResult }) => {
-                      if (fetchMoreResult.length === 0) {
-                        return;
+                      if (!fetchMoreResult || fetchMoreResult.length === 0) {
+                        return previousResult;
                       }
                       return {
                         comics: previousResult.comics.concat(
@@ -122,11 +118,11 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
                 onPress={() => {
                   NavigationService.navigate("CharacterTimeline", {
                     character
-                  })
+                  });
                 }}
                 title="View Character Timeline"
-                color='#841584'
-                accessibilityLabel='Learn more about this button'
+                color="#841584"
+                accessibilityLabel="Learn more about this button"
               />
             </View>
           );
