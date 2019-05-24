@@ -11,11 +11,12 @@ import { AppContainer } from "./router";
 import NavigationService from "../services/NavigationService";
 
 import { persistCache, CachePersistor } from "apollo-cache-persist";
-// import { PersistentStorage, PersistedData } from 'apollo-cache-persist/types';
+import { PersistentStorage, PersistedData } from "apollo-cache-persist/types";
 
 // Persist the cache through reload: https://github.com/apollographql/apollo-cache-persist
 const cache = new InMemoryCache();
 
+<<<<<<< Updated upstream
 // persistCache({
 //   cache,
 //   debug: true,
@@ -26,6 +27,20 @@ const cache = new InMemoryCache();
 //     PersistedData<NormalizedCacheObject>
 //   >
 // });
+=======
+const persistor = new CachePersistor(
+  {
+    cache,
+    debug: true,
+    debounce: 200,
+
+    // TypeScript workaround: https://github.com/apollographql/apollo-cache-persist/issues/75
+    storage: AsyncStorage as PersistentStorage<
+      PersistedData<NormalizedCacheObject>
+    >
+  }
+);
+>>>>>>> Stashed changes
 
 const client = new ApolloClient({
   cache,
@@ -144,6 +159,11 @@ const client = new ApolloClient({
     }
   }
 });
+
+// persistor.purge()
+// persistor.remove()
+// client.resetStore()
+client.clearStore()
 
 export default class App extends React.Component {
   render() {

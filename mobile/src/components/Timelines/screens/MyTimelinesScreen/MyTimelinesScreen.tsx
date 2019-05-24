@@ -188,6 +188,18 @@ export default class MyTimelinesScreen extends React.Component<
                         );
                       }}
                     />
+                    <View>
+                      <Button
+                        onPress={() => {
+                          NavigationService.navigate("Timelines", {
+                            character: item
+                          })
+                        }}
+                        title="View"
+                        color='#841584'
+                        accessibilityLabel='Learn more about this button'
+                      />
+                    </View>
                   </View>
                 )
               }}

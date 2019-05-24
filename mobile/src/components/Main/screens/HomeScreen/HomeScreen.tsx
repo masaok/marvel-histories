@@ -24,6 +24,7 @@ export default class HomeScreen extends React.Component<Props, State> {
     return (
       // @ts-ignore
       <Query
+        // fetchPolicy='network-only'
         query={gql`
           {
             characters(offset: 50) {
