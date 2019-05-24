@@ -23,12 +23,14 @@ interface State {
     name: String,
     thumbnail: String,
   }
-  timelines:
-  {
-    id: Number,
-    name: String,
-    thumbnail: String,
-  }[][]
+  timelines: {
+    key: String,
+    items: {
+      id: Number,
+      name: String,
+      thumbnail: String,
+    }[]
+  }[]
 }
 
 export default class MyTimelinesScreen extends React.Component<
@@ -42,7 +44,11 @@ export default class MyTimelinesScreen extends React.Component<
     }
   };
 
-  _keyExtractor = item => item.id;
+  _keyExtractor = item => {
+    console.log("KEY EXTRACTOR > ITEM:")
+    console.log(item)
+    return item.key.toString();
+  }
 
   // _keyGenerator = item => {
   //   id = id + 1
@@ -65,42 +71,51 @@ export default class MyTimelinesScreen extends React.Component<
     const character = characterParam ? characterParam : characterMock;
 
     const timelinesMock = [
-      [
-        {
-          id: 1009313,
-          name: "Gambit",
-          thumbnail: "http://i.annihil.us/u/prod/marvel/i/mg/a/40/52696aa8aee99.jpg",
-        },
-        {
-          id: 1009159,
-          name: "Archangel",
-          thumbnail: "http://i.annihil.us/u/prod/marvel/i/mg/8/03/526165ed93180.jpg",
-        },
-        {
-          id: 1011012,
-          name: "Armadillo",
-          thumbnail: "http://i.annihil.us/u/prod/marvel/i/mg/2/40/4c0032754da02.jpg",
-        }
-      ],
-      [
-        {
-          id: 1009313,
-          name: "Gambit",
-          thumbnail: "http://i.annihil.us/u/prod/marvel/i/mg/a/40/52696aa8aee99.jpg",
-        },
-        {
-          id: 1011012,
-          name: "Armadillo",
-          thumbnail: "http://i.annihil.us/u/prod/marvel/i/mg/2/40/4c0032754da02.jpg",
-        }
-      ],
-      [
-        {
-          id: 1011012,
-          name: "Armadillo",
-          thumbnail: "http://i.annihil.us/u/prod/marvel/i/mg/2/40/4c0032754da02.jpg",
-        }
-      ]
+      {
+        key: "1",
+        items: [
+          {
+            id: 1009313,
+            name: "Gambit",
+            thumbnail: "http://i.annihil.us/u/prod/marvel/i/mg/a/40/52696aa8aee99.jpg",
+          },
+          {
+            id: 1009159,
+            name: "Archangel",
+            thumbnail: "http://i.annihil.us/u/prod/marvel/i/mg/8/03/526165ed93180.jpg",
+          },
+          {
+            id: 1011012,
+            name: "Armadillo",
+            thumbnail: "http://i.annihil.us/u/prod/marvel/i/mg/2/40/4c0032754da02.jpg",
+          }
+        ],
+      },
+      {
+        key: "2",
+        items: [
+          {
+            id: 1009313,
+            name: "Gambit",
+            thumbnail: "http://i.annihil.us/u/prod/marvel/i/mg/a/40/52696aa8aee99.jpg",
+          },
+          {
+            id: 1011012,
+            name: "Armadillo",
+            thumbnail: "http://i.annihil.us/u/prod/marvel/i/mg/2/40/4c0032754da02.jpg",
+          }
+        ],
+      },
+      {
+        key: "3",
+        items: [
+          {
+            id: 1009313,
+            name: "Gambit",
+            thumbnail: "http://i.annihil.us/u/prod/marvel/i/mg/a/40/52696aa8aee99.jpg",
+          },
+        ],
+      },
     ]
 
     this.state = {
@@ -151,39 +166,28 @@ export default class MyTimelinesScreen extends React.Component<
               {toggleSaveCharacterTimeline => {
                 console.log("QUERY > MUTATION > SAVED CHAR TIMELINES:")
                 console.log(data.savedCharacterTimelines)
+                console.log("MY TIMELINE > RENDER > TIMELINES:")
+                console.log(timelines)
                 return (
                   <View>
                     <View style={styles.listRow}>
                       <Text style={styles.subtitle}>Character Timelines</Text>
                     </View>
-                    <View style={styles.listRowOutline}>
-                      <Image
-                        style={styles.thumbnail}
-                        source={{ uri: character.thumbnail }}
-                      />
-                    </View>
-                    <View style={styles.listRowOutline}>
-                      <Image
-                        style={styles.thumbnail}
-                        source={{ uri: character.thumbnail }}
-                      />
-                    </View>
-                    <View style={styles.listRowOutline}>
-                      <Image
-                        style={styles.thumbnail}
-                        source={{ uri: character.thumbnail }}
-                      />
-                    </View>
                     <FlatList
                       data={timelines}
                       keyExtractor={this._keyExtractor}
                       renderItem={({ item }) => {
+                        console.log("MY TIMELINE > RENDER > item:")
+                        console.log(item.items)
                         return (
-                          <View style={styles.listRowOutline}>
-                            <Image
-                              style={styles.thumbnail}
-                              source={{ uri: character.thumbnail }}
-                            />
+                          <View style={styles.listRowSlot}>
+                            {item.items.map(char => (
+                              <Image
+                                key={char.id}
+                                style={styles.thumbnail}
+                                source={{ uri: char.thumbnail }}
+                              />
+                            ))}
                           </View>
                         );
                       }}
@@ -191,11 +195,8 @@ export default class MyTimelinesScreen extends React.Component<
                     <View>
                       <Button
                         onPress={() => {
-                          NavigationService.navigate("Timelines", {
-                            character: item
-                          })
                         }}
-                        title="View"
+                        title="Add Character Timeline Slot"
                         color='#841584'
                         accessibilityLabel='Learn more about this button'
                       />

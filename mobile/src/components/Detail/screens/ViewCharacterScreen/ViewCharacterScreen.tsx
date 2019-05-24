@@ -38,6 +38,7 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
     const character = this.props.navigation.getParam("character");
     return (
       <Query
+        fetchPolicy="no-cache" // does not work
         skip={character.id === null}
         variables={{
           id: character.id,
