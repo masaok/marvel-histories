@@ -162,38 +162,39 @@ export const MainTabsNavigator = createBottomTabNavigator(
   }
 );
 
+const MainModalRoutes = {
+  MyTimelines: MyTimelinesScreen,
+}
+
 // TODO: Create a "Main Without Modals" StackNavigator here
 
-// export const MainWithoutModalsNavigator = createStackNavigator(
-//   {
-//     MainTabs: MainTabsNavigator,
-//     ...MainRoutes,
-//     // ...SettingsRoutes,
-//     // ...ProfileRoutes,
-//     ...SearchRoutes,
-//   },
-//   {
-//     initialRouteName: 'MainTabs',
-//     headerMode: 'none',
-//   }
-// );
+export const MainWithoutModalsNavigator = createStackNavigator(
+  {
+    MainTabs: MainTabsNavigator,
+    // ...MainRoutes,
+  },
+  {
+    initialRouteName: 'MainTabs',
+    headerMode: 'none',
+  }
+);
 
 
 // TODO: Create a "Main Navigator" StackNavigator and include the "Main Without Modals" navigator
 
-// export const MainNavigator = createStackNavigator(
-//   {
-//     MainWithoutModals: MainWithoutModalsNavigator,
-//     ...MainModalRoutes,
-//     ...SearchModalRoutes,
-//     ...ProfileModalRoutes,
-//     ...SettingsModalRoutes,
-//   },
-//   {
-//     initialRouteName: 'MainWithoutModals',
-//     mode: 'modal',
-//     headerMode: 'none',
-//   }
-// );
+export const MainNavigator = createStackNavigator(
+  {
+    MainWithoutModals: MainWithoutModalsNavigator,
+    ...MainModalRoutes,
+    // ...SearchModalRoutes,
+    // ...ProfileModalRoutes,
+    // ...SettingsModalRoutes,
+  },
+  {
+    initialRouteName: 'MainWithoutModals',
+    mode: 'modal',
+    headerMode: 'none',
+  }
+);
 
 
