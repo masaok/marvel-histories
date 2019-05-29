@@ -161,3 +161,39 @@ export const MainTabsNavigator = createBottomTabNavigator(
     }
   }
 );
+
+// TODO: Create a "Main Without Modals" StackNavigator here
+
+// export const MainWithoutModalsNavigator = createStackNavigator(
+//   {
+//     MainTabs: MainTabsNavigator,
+//     ...MainRoutes,
+//     // ...SettingsRoutes,
+//     // ...ProfileRoutes,
+//     ...SearchRoutes,
+//   },
+//   {
+//     initialRouteName: 'MainTabs',
+//     headerMode: 'none',
+//   }
+// );
+
+
+// TODO: Create a "Main Navigator" StackNavigator and include the "Main Without Modals" navigator
+
+// export const MainNavigator = createStackNavigator(
+//   {
+//     MainWithoutModals: MainWithoutModalsNavigator,
+//     ...MainModalRoutes,
+//     ...SearchModalRoutes,
+//     ...ProfileModalRoutes,
+//     ...SettingsModalRoutes,
+//   },
+//   {
+//     initialRouteName: 'MainWithoutModals',
+//     mode: 'modal',
+//     headerMode: 'none',
+//   }
+// );
+
+
