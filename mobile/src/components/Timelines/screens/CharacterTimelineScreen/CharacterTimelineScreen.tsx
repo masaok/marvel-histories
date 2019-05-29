@@ -11,6 +11,7 @@ import gql from 'graphql-tag';
 import MainScreenHeader from '../../../shared/Headers/MainScreenHeader';
 import { NavigationScreenProp } from 'react-navigation';
 import SubScreenHeader from '../../../shared/Headers/SubScreenHeader';
+import NavigationService from '../../../../services/NavigationService';
 
 export interface Props {
   navigation: NavigationScreenProp<{}>;
@@ -19,6 +20,7 @@ export interface Props {
 interface State {
   text: String,
   name: String | null,
+  mode: String,
   character: {
     id: Number,
     name: String,
@@ -55,6 +57,7 @@ export default class CharacterTimelineScreen extends React.Component<
     this.state = {
       text: "Iron Man",
       name: null,
+      mode: "view",
       character
     };
   }
@@ -112,6 +115,7 @@ export default class CharacterTimelineScreen extends React.Component<
                       }}>{character.name}</Text>
                     </View>
 
+                    {/* Save (Like) Timeline */}
                     <Button
                       onPress={() => {
                         toggleSaveCharacterTimeline({
@@ -124,7 +128,6 @@ export default class CharacterTimelineScreen extends React.Component<
                           }
                         })
                       }}
-                      // title="TEST"
                       title={
                         data.savedCharacterTimelines
                           .map(char => char.id)
@@ -133,8 +136,34 @@ export default class CharacterTimelineScreen extends React.Component<
                           : 'Save Timeline'
                       }
                       color='#841584'
-                      accessibilityLabel='Learn more about this button'
                     />
+
+                    {/* {!this.props.readOnly && (
+                        <Icon
+                          size={25}
+                          name='edit'
+                          color='lightgrey'
+                          onPress={() =>
+                            NavigationService.navigate('EditRoll', { roll })
+                          }
+                          iconStyle={styles.editIcon}
+                        />
+                      )} */}
+
+                    {/* TODO: Show a modal of My Timelines, allowing the user to select which My Timeline to add it to */}
+                    <Button
+                      onPress={() => {
+                        NavigationService.navigate('MyTimelines', { character })
+                      }}
+                      title={
+                        data.savedCharacterTimelines
+                          .map(char => char.id)
+                          .indexOf(character.id) > -1
+                          ? 'Remove from My Timelines'
+                          : 'Save To My Timelines'
+                      }
+                    />
+
                     <FlatList
                       data={data.comics}
                       keyExtractor={this._keyExtractor}

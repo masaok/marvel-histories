@@ -18,6 +18,7 @@ export interface Props {
 interface State {
   text: String,
   name: String | null,
+  mode: String,
   character: {
     id: Number,
     name: String,
@@ -122,6 +123,7 @@ export default class MyTimelinesScreen extends React.Component<
       text: "Iron Man",
       name: null,
       character,
+      mode: "view",
       timelines: timelinesMock
     };
   }
