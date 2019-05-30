@@ -175,6 +175,16 @@ export const MainWithoutModalsNavigator = createStackNavigator(
   {
     initialRouteName: 'MainTabs',
     headerMode: 'none',
+
+    navigationOptions: ({ navigation }) => {
+      const component = MainWithoutModalsNavigator.router.getComponentForState(
+        navigation.state
+      );
+      if (typeof component.navigationOptions === "function") {
+        return component.navigationOptions({ navigation });
+      }
+      return component.navigationOptions;
+    }
   }
 );
 
@@ -182,6 +192,7 @@ export const MainWithoutModalsNavigator = createStackNavigator(
 export const MainNavigator = createStackNavigator(
   {
     MainWithoutModals: MainWithoutModalsNavigator,
+    // MainTabs: MainTabsNavigator,
     ...MainModalRoutes,
     // ...SearchModalRoutes,
     // ...ProfileModalRoutes,
@@ -191,6 +202,15 @@ export const MainNavigator = createStackNavigator(
     initialRouteName: 'MainWithoutModals',
     mode: 'modal',
     headerMode: 'none',
+    navigationOptions: ({ navigation }) => {
+      const component = MainNavigator.router.getComponentForState(
+        navigation.state
+      );
+      if (typeof component.navigationOptions === "function") {
+        return component.navigationOptions({ navigation });
+      }
+      return component.navigationOptions;
+    }
   }
 );
 
