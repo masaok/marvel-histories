@@ -163,11 +163,10 @@ export const MainTabsNavigator = createBottomTabNavigator(
 );
 
 const MainModalRoutes = {
-  MyTimelines: MyTimelinesScreen,
+  SaveToMyTimelines: MyTimelinesScreen,
 }
 
-// TODO: Create a "Main Without Modals" StackNavigator here
-
+// Non-modal StackNavigator
 export const MainWithoutModalsNavigator = createStackNavigator(
   {
     MainTabs: MainTabsNavigator,
@@ -179,9 +178,7 @@ export const MainWithoutModalsNavigator = createStackNavigator(
   }
 );
 
-
-// TODO: Create a "Main Navigator" StackNavigator and include the "Main Without Modals" navigator
-
+// Create a "Modals Only" StackNavigator and include the "Main Without Modals" navigator
 export const MainNavigator = createStackNavigator(
   {
     MainWithoutModals: MainWithoutModalsNavigator,

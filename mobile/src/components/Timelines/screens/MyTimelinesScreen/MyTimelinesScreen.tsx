@@ -11,6 +11,8 @@ import gql from 'graphql-tag';
 import { NavigationScreenProp } from 'react-navigation';
 import SubScreenHeader from '../../../shared/Headers/SubScreenHeader';
 
+import { Header } from 'react-native-elements';
+
 export interface Props {
   navigation: NavigationScreenProp<{}>;
 }
@@ -172,6 +174,13 @@ export default class MyTimelinesScreen extends React.Component<
                 console.log(timelines)
                 return (
                   <View>
+                    <Header
+                      backgroundColor='white'
+                      placement='right'
+                      leftComponent={
+                        <View><Text>TEST</Text></View>
+                      }
+                    />
                     <View style={styles.listRow}>
                       <Text style={styles.subtitle}>Character Timelines</Text>
                     </View>

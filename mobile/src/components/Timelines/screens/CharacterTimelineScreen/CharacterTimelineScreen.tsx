@@ -153,7 +153,7 @@ export default class CharacterTimelineScreen extends React.Component<
                     {/* TODO: Show a modal of My Timelines, allowing the user to select which My Timeline to add it to */}
                     <Button
                       onPress={() => {
-                        NavigationService.navigate('MyTimelines', { character })
+                        NavigationService.navigate('SaveToMyTimelines', { character })
                       }}
                       title={
                         data.savedCharacterTimelines
