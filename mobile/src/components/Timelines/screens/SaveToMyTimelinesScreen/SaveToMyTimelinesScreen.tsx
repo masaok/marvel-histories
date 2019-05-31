@@ -3,7 +3,7 @@
  */
 
 import * as React from 'react';
-import { Text, View, FlatList, Image, Button } from 'react-native';
+import { Text, View, FlatList, Image, Button, TouchableHighlight } from 'react-native';
 
 import styles from './SaveToMyTimelinesScreen.styles';
 import { Query, Mutation } from 'react-apollo';
@@ -172,6 +172,7 @@ export default class MyTimelinesScreen extends React.Component<
             );
           }
           return (
+            // TODO: Make this mutation save the given Character Timeline to the Timeline Slot
             <Mutation mutation={gql`
                 mutation TOGGLE_SAVE_CHARACTER_TIMELINE($character: Character!) {
                   toggleSaveCharacterTimeline(character: $character) @client
@@ -185,6 +186,19 @@ export default class MyTimelinesScreen extends React.Component<
                 console.log(timelines)
                 return (
                   <View>
+                    <View style={styles.listRow}>
+                      <Text style={styles.subtitle}>Where do you want to save this character?</Text>
+                    </View>
+                    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                      <Image
+                        style={styles.thumbnail}
+                        source={{ uri: character.thumbnail }}
+                      />
+                      <Text style={{
+                        marginLeft: 5,
+                        marginRight: "auto",
+                      }}>{character.name}</Text>
+                    </View>
                     <View style={styles.listRow}>
                       <Text style={styles.subtitle}>Character Timelines</Text>
                     </View>
@@ -214,24 +228,33 @@ export default class MyTimelinesScreen extends React.Component<
                         console.log("MY TIMELINE > RENDER > item.items:")
                         console.log(item.items)
                         return (
-                          item.items.length > 0 ? <View style={styles.listRowSlot}>
-                            {item.items.map(char => {
-                              // console.log("MY TIMELINE > RENDER > VIEW > MAP > CHAR:")
-                              // console.log(char)
-                              <Image
-                                key={char.id}
-                                style={styles.thumbnail}
-                                source={{ uri: char.thumbnail }}
-                              />
-                            })
+                          <TouchableHighlight
+                            onPress={(item) => {
+                              // TODO: Pass in information about this slot into the Mutation, so we can add this character to the timeline slot
+                              console.log("PRESSED ITEM:")
+                              console.log(item)
+                            }}
+                          >
+                            {item.items.length > 0 ?
+                              <View style={styles.listRowSlot}>
+                                {item.items.map(char => {
+                                  // console.log("MY TIMELINE > RENDER > VIEW > MAP > CHAR:")
+                                  // console.log(char)
+                                  <Image
+                                    key={char.id}
+                                    style={styles.thumbnail}
+                                    source={{ uri: char.thumbnail }}
+                                  />
+                                })}
+                              </View> :
+                              <View style={styles.listRowSlot}>
+                                <Image
+                                  style={styles.thumbnail}
+                                  source={{ uri: "https://dummyimage.com/300/FFF/fff.jpg" }}
+                                />
+                              </View>
                             }
-                          </View> :
-                            <View style={styles.listRowSlot}>
-                              <Image
-                                style={styles.thumbnail}
-                                source={{ uri: "https://dummyimage.com/300/FFF/fff.jpg" }}
-                              />
-                            </View>
+                          </TouchableHighlight>
                         );
                       }}
                     />

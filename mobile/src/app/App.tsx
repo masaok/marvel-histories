@@ -67,6 +67,7 @@ const client = new ApolloClient({
         }
       },
       Mutation: {
+        // TODO: Refactor these mutations
         updateNetworkStatus: (_, { isConnected }, { cache }) => {
           cache.writeData({ data: { isConnected } });
           return null;
@@ -111,6 +112,55 @@ const client = new ApolloClient({
           return data;
         },
         toggleSaveCharacterTimeline: (_, { character }, { cache }) => {
+          console.log("TOGGLE > CHARACTER:");
+          console.log(character);
+
+          character.__typename = "Character"; // must give typename (required by Apollo client)
+
+          // Query to fetch current data
+          const query = gql`
+            query GetSavedCharacterTimelines {
+              savedCharacterTimelines @client {
+                id
+                name
+                thumbnail
+              }
+            }
+          `;
+
+          // Execute the query
+          const current = cache.readQuery({ query });
+
+          // Prepare to edit the list
+          let savedCharacterTimelines = current.savedCharacterTimelines;
+
+          // Get the index of the incoming character in the list of current data
+          const index = savedCharacterTimelines
+            .map(item => item.id)
+            .indexOf(character.id);
+
+          // Either concat or splice the mutable variable prepared above
+          if (index < 0) {
+            savedCharacterTimelines = savedCharacterTimelines.concat([
+              character
+            ]);
+          } else {
+            savedCharacterTimelines.splice(index, 1);
+          }
+
+          // Data must a separate hash (cannot be inline in writeQuery)
+          const data = {
+            savedCharacterTimelines
+          };
+
+          console.log("TOGGLE > DATA:");
+          console.log(data);
+
+          cache.writeQuery({ query, data });
+
+          return data;
+        },
+        saveCharacterToMyTimeline: (_, { character }, { cache }) => {
           console.log("TOGGLE > CHARACTER:");
           console.log(character);
 
