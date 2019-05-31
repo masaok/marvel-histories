@@ -5,7 +5,7 @@
 import * as React from 'react';
 import { Text, View, FlatList, Image, Button } from 'react-native';
 
-import styles from './MyTimelinesScreen.styles';
+import styles from './SaveToMyTimelinesScreen.styles';
 import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import { NavigationScreenProp } from 'react-navigation';
@@ -55,8 +55,8 @@ export default class MyTimelinesScreen extends React.Component<
   };
 
   _keyExtractor = item => {
-    // console.log("KEY EXTRACTOR > ITEM:")
-    // console.log(item)
+    console.log("KEY EXTRACTOR > ITEM:")
+    console.log(item)
     return item.key.toString();
   }
 
@@ -181,8 +181,6 @@ export default class MyTimelinesScreen extends React.Component<
               {toggleSaveCharacterTimeline => {
                 console.log("QUERY > MUTATION > SAVED CHAR TIMELINES:")
                 console.log(data.savedCharacterTimelines)
-                console.log("QUERY > MUTATION > MY TIMELINES:")
-                console.log(data.myTimelines)
                 console.log("MY TIMELINE > RENDER > TIMELINES:")
                 console.log(timelines)
                 return (

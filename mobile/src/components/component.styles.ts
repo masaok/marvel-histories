@@ -45,12 +45,11 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between"
   },
-  listRowOutline: {
+  listRowSlot: {
     alignItems: "center",
     borderWidth: 1,
     borderRadius: 10,
     flexDirection: "row",
-    justifyContent: "space-between",
     marginLeft: 10,
     marginRight: 10,
     marginTop: 10,

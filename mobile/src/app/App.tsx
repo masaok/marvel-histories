@@ -11,21 +11,23 @@ import { AppContainer } from "./router";
 import NavigationService from "../services/NavigationService";
 
 import { persistCache, CachePersistor } from "apollo-cache-persist";
-// import { PersistentStorage, PersistedData } from 'apollo-cache-persist/types';
+import { PersistentStorage, PersistedData } from "apollo-cache-persist/types";
 
 // Persist the cache through reload: https://github.com/apollographql/apollo-cache-persist
 const cache = new InMemoryCache();
 
-// persistCache({
-//   cache,
-//   debug: true,
-//   debounce: 200,
+const persistor = new CachePersistor(
+  {
+    cache,
+    debug: true,
+    debounce: 200,
 
-//   // TypeScript workaround: https://github.com/apollographql/apollo-cache-persist/issues/75
-//   storage: AsyncStorage as PersistentStorage<
-//     PersistedData<NormalizedCacheObject>
-//   >
-// });
+    // TypeScript workaround: https://github.com/apollographql/apollo-cache-persist/issues/75
+    storage: AsyncStorage as PersistentStorage<
+      PersistedData<NormalizedCacheObject>
+    >
+  }
+);
 
 const client = new ApolloClient({
   cache,
@@ -39,7 +41,24 @@ const client = new ApolloClient({
         __typename: "Character"
       },
       likedCharacters: [],
-      savedCharacterTimelines: []
+      savedCharacterTimelines: [],
+      myTimelines: [
+        {
+          __typename: "Timeline",
+          key: "1",
+          items: []
+        },
+        {
+          __typename: "Timeline",
+          key: "2",
+          items: []
+        },
+        {
+          __typename: "Timeline",
+          key: "3",
+          items: []
+        },
+      ]
     },
     resolvers: {
       Query: {
@@ -144,6 +163,15 @@ const client = new ApolloClient({
     }
   }
 });
+
+// https://github.com/apollographql/apollo-cache-persist/issues/34#issuecomment-371177206
+// persistor.purge()
+// persistor.remove()
+// client.resetStore()
+
+// https://github.com/apollographql/apollo-cache-persist/issues/34#issuecomment-429349279
+// https://www.apollographql.com/docs/react/recipes/authentication#login-logout
+// client.clearStore()
 
 export default class App extends React.Component {
   render() {

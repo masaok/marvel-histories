@@ -15,6 +15,7 @@ import CharacterTimelineScreen from "../Timelines/screens/CharacterTimelineScree
 import { Colors } from "../../assets";
 import SeriesScreen from "./screens/SeriesScreen";
 import MyTimelinesScreen from "../Timelines/screens/MyTimelinesScreen";
+import SaveToMyTimelinesScreen from "../Timelines/screens/SaveToMyTimelinesScreen";
 
 const HomeNavigator = createStackNavigator({ Home: HomeScreen });
 const SearchNavigator = createStackNavigator({ Search: SearchScreen });
@@ -161,3 +162,57 @@ export const MainTabsNavigator = createBottomTabNavigator(
     }
   }
 );
+
+const MainModalRoutes = {
+  SaveToMyTimelines: SaveToMyTimelinesScreen,
+}
+
+// Non-modal StackNavigator
+export const MainWithoutModalsNavigator = createStackNavigator(
+  {
+    MainTabs: MainTabsNavigator,
+    // ...MainRoutes,
+  },
+  {
+    initialRouteName: 'MainTabs',
+    headerMode: 'none',
+
+    navigationOptions: ({ navigation }) => {
+      const component = MainWithoutModalsNavigator.router.getComponentForState(
+        navigation.state
+      );
+      if (typeof component.navigationOptions === "function") {
+        return component.navigationOptions({ navigation });
+      }
+      return component.navigationOptions;
+    }
+  }
+);
+
+// Create a "Modals Only" StackNavigator and include the "Main Without Modals" navigator
+export const MainNavigator = createStackNavigator(
+  {
+    MainWithoutModals: MainWithoutModalsNavigator,
+    // MainTabs: MainTabsNavigator,
+    ...MainModalRoutes,
+    // ...SearchModalRoutes,
+    // ...ProfileModalRoutes,
+    // ...SettingsModalRoutes,
+  },
+  {
+    initialRouteName: 'MainWithoutModals',
+    mode: 'modal',
+    headerMode: 'none',
+    navigationOptions: ({ navigation }) => {
+      const component = MainNavigator.router.getComponentForState(
+        navigation.state
+      );
+      if (typeof component.navigationOptions === "function") {
+        return component.navigationOptions({ navigation });
+      }
+      return component.navigationOptions;
+    }
+  }
+);
+
+
