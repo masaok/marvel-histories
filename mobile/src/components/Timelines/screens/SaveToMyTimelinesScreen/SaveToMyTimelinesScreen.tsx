@@ -156,6 +156,10 @@ export default class MyTimelinesScreen extends React.Component<
               name
               thumbnail
             }
+            myTimelines @client {
+              key
+              items
+            }
           }
         `}
       >
@@ -200,6 +204,34 @@ export default class MyTimelinesScreen extends React.Component<
                               />
                             ))}
                           </View>
+                        );
+                      }}
+                    />
+                    <FlatList
+                      data={data.myTimelines}
+                      keyExtractor={this._keyExtractor}
+                      renderItem={({ item }) => {
+                        console.log("MY TIMELINE > RENDER > item.items:")
+                        console.log(item.items)
+                        return (
+                          item.items.length > 0 ? <View style={styles.listRowSlot}>
+                            {item.items.map(char => {
+                              // console.log("MY TIMELINE > RENDER > VIEW > MAP > CHAR:")
+                              // console.log(char)
+                              <Image
+                                key={char.id}
+                                style={styles.thumbnail}
+                                source={{ uri: char.thumbnail }}
+                              />
+                            })
+                            }
+                          </View> :
+                            <View style={styles.listRowSlot}>
+                              <Image
+                                style={styles.thumbnail}
+                                source={{ uri: "https://dummyimage.com/300/FFF/fff.jpg" }}
+                              />
+                            </View>
                         );
                       }}
                     />

@@ -25,20 +25,20 @@ const ENUM = 'a' || 'b' || 'c'
 
 
 interface State {
-  text: String,
-  name: String | null,
-  mode: String,
+  text: string,
+  name: string | null,
+  mode: string,
   character: {
-    id: Number,
-    name: String,
-    thumbnail: String,
+    id: number,
+    name: string,
+    thumbnail: string,
   }
   timelines: {
-    key: String,
+    key: string,
     items: {
-      id: Number,
-      name: String,
-      thumbnail: String,
+      id: number,
+      name: string,
+      thumbnail: string,
     }[]
   }[]
 }
@@ -55,8 +55,8 @@ export default class MyTimelinesScreen extends React.Component<
   };
 
   _keyExtractor = item => {
-    console.log("KEY EXTRACTOR > ITEM:")
-    console.log(item)
+    // console.log("KEY EXTRACTOR > ITEM:")
+    // console.log(item)
     return item.key.toString();
   }
 
@@ -156,6 +156,10 @@ export default class MyTimelinesScreen extends React.Component<
               name
               thumbnail
             }
+            myTimelines @client {
+              key
+              items
+            }
           }
         `}
       >
@@ -177,6 +181,8 @@ export default class MyTimelinesScreen extends React.Component<
               {toggleSaveCharacterTimeline => {
                 console.log("QUERY > MUTATION > SAVED CHAR TIMELINES:")
                 console.log(data.savedCharacterTimelines)
+                console.log("QUERY > MUTATION > MY TIMELINES:")
+                console.log(data.myTimelines)
                 console.log("MY TIMELINE > RENDER > TIMELINES:")
                 console.log(timelines)
                 return (
@@ -200,6 +206,34 @@ export default class MyTimelinesScreen extends React.Component<
                               />
                             ))}
                           </View>
+                        );
+                      }}
+                    />
+                    <FlatList
+                      data={data.myTimelines}
+                      keyExtractor={this._keyExtractor}
+                      renderItem={({ item }) => {
+                        console.log("MY TIMELINE > RENDER > item.items:")
+                        console.log(item.items)
+                        return (
+                          item.items.length > 0 ? <View style={styles.listRowSlot}>
+                            {item.items.map(char => {
+                              // console.log("MY TIMELINE > RENDER > VIEW > MAP > CHAR:")
+                              // console.log(char)
+                              <Image
+                                key={char.id}
+                                style={styles.thumbnail}
+                                source={{ uri: char.thumbnail }}
+                              />
+                            })
+                            }
+                          </View> :
+                            <View style={styles.listRowSlot}>
+                              <Image
+                                style={styles.thumbnail}
+                                source={{ uri: "https://dummyimage.com/300/FFF/fff.jpg" }}
+                              />
+                            </View>
                         );
                       }}
                     />

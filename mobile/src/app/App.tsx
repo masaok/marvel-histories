@@ -41,7 +41,24 @@ const client = new ApolloClient({
         __typename: "Character"
       },
       likedCharacters: [],
-      savedCharacterTimelines: []
+      savedCharacterTimelines: [],
+      myTimelines: [
+        {
+          __typename: "Timeline",
+          key: "1",
+          items: []
+        },
+        {
+          __typename: "Timeline",
+          key: "2",
+          items: []
+        },
+        {
+          __typename: "Timeline",
+          key: "3",
+          items: []
+        },
+      ]
     },
     resolvers: {
       Query: {
