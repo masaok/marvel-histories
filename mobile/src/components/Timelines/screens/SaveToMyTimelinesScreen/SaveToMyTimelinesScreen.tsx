@@ -5,7 +5,7 @@
 import * as React from 'react';
 import { Text, View, FlatList, Image, Button } from 'react-native';
 
-import styles from './MyTimelinesScreen.styles';
+import styles from './SaveToMyTimelinesScreen.styles';
 import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import { NavigationScreenProp } from 'react-navigation';
@@ -25,20 +25,20 @@ const ENUM = 'a' || 'b' || 'c'
 
 
 interface State {
-  text: String,
-  name: String | null,
-  mode: String,
+  text: string,
+  name: string | null,
+  mode: string,
   character: {
-    id: Number,
-    name: String,
-    thumbnail: String,
+    id: number,
+    name: string,
+    thumbnail: string,
   }
   timelines: {
-    key: String,
+    key: string,
     items: {
-      id: Number,
-      name: String,
-      thumbnail: String,
+      id: number,
+      name: string,
+      thumbnail: string,
     }[]
   }[]
 }

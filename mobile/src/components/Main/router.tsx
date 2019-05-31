@@ -15,6 +15,7 @@ import CharacterTimelineScreen from "../Timelines/screens/CharacterTimelineScree
 import { Colors } from "../../assets";
 import SeriesScreen from "./screens/SeriesScreen";
 import MyTimelinesScreen from "../Timelines/screens/MyTimelinesScreen";
+import SaveToMyTimelinesScreen from "../Timelines/screens/SaveToMyTimelinesScreen";
 
 const HomeNavigator = createStackNavigator({ Home: HomeScreen });
 const SearchNavigator = createStackNavigator({ Search: SearchScreen });
@@ -163,7 +164,7 @@ export const MainTabsNavigator = createBottomTabNavigator(
 );
 
 const MainModalRoutes = {
-  SaveToMyTimelines: MyTimelinesScreen,
+  SaveToMyTimelines: SaveToMyTimelinesScreen,
 }
 
 // Non-modal StackNavigator
