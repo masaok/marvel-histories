@@ -27,6 +27,7 @@ interface State {
 
 export default class ViewCharacterScreen extends React.Component<Props, State> {
   static navigationOptions = {
+    title: "View Character",
     header: props => <SubScreenHeader title={"View Character"} {...props} />
   };
   _keyExtractor = item => item.id;
