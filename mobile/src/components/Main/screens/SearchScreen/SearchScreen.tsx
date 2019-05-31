@@ -82,7 +82,7 @@ export default class SearchScreen extends React.Component<Props, State> {
                       <TouchableWithoutFeedback
                         onPress={() =>
                           NavigationService.navigate("Timelines", {
-                            character: item
+                            character: data.getCharacter
                           })
                         }
                       >

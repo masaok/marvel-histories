@@ -12,6 +12,7 @@ import { gql } from "apollo-boost";
 import SubScreenHeader from "../../../shared/Headers/SubScreenHeader";
 import { NavigationScreenProp } from "react-navigation";
 import NavigationService from "../../../../services/NavigationService";
+import { Colors } from "../../../../assets";
 
 export interface Props {
   navigation: NavigationScreenProp<{}>;
@@ -26,6 +27,7 @@ interface State {
 
 export default class ViewCharacterScreen extends React.Component<Props, State> {
   static navigationOptions = {
+    title: "View Character",
     header: props => <SubScreenHeader title={"View Character"} {...props} />
   };
   _keyExtractor = item => item.id;
@@ -122,7 +124,7 @@ export default class ViewCharacterScreen extends React.Component<Props, State> {
                   });
                 }}
                 title="View Character Timeline"
-                color="#841584"
+                color={Colors.blue}
                 accessibilityLabel="Learn more about this button"
               />
             </View>
