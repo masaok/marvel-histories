@@ -146,7 +146,6 @@ export default class MyTimelinesScreen extends React.Component<
       <Query
         query={gql`
           {
-            # TODO: need to mock this ID similar to how a user would navigate here from another page
             comics(where: { characters: [${character.id}] }, orderBy: focDate_asc, limit: 10 ) {
               id
               title
@@ -174,18 +173,18 @@ export default class MyTimelinesScreen extends React.Component<
             );
           }
           return (
-            // TODO: Make this mutation save the given Character Timeline to the Timeline Slot
+            // Save the given Character Timeline to the user-selected Timeline Slot
             <Mutation mutation={gql`
-                mutation SAVE_CHARACTER_TO_MY_TIMELINES($character: Character!) {
-                  saveCharacterToMyTimelines(character: $character) @client
+                mutation SAVE_CHARACTER_TO_MY_TIMELINES($character: Character!, $slot: Object, $test: string) {
+                  saveCharacterToMyTimelines(character: $character, slot: $slot, test: $test) @client
                 }
               `}
             >
               {saveCharacterToMyTimelines => {
-                console.log("QUERY > MUTATION > SAVED CHAR TIMELINES:")
+                console.log("SAVE TO MY > QUERY > MUTATION > SAVED CHAR TIMELINES:")
                 console.log(data.savedCharacterTimelines)
-                console.log("MY TIMELINE > RENDER > TIMELINES:")
-                console.log(timelines)
+                console.log("SAVE TO MY > QUERY > MUTATION > MY TIMELINES:")
+                console.log(data.myTimelines)
                 return (
                   <View>
                     <View style={styles.listRow}>
@@ -204,7 +203,7 @@ export default class MyTimelinesScreen extends React.Component<
                     <View style={styles.listRow}>
                       <Text style={styles.subtitle}>Character Timelines</Text>
                     </View>
-                    <FlatList
+                    {/* <FlatList
                       data={timelines}
                       keyExtractor={this._keyExtractor}
                       renderItem={({ item }) => {
@@ -222,7 +221,7 @@ export default class MyTimelinesScreen extends React.Component<
                           </View>
                         );
                       }}
-                    />
+                    /> */}
                     <FlatList
                       data={data.myTimelines}
                       keyExtractor={this._keyExtractor}
@@ -231,16 +230,14 @@ export default class MyTimelinesScreen extends React.Component<
                         console.log(item.items)
                         return (
                           <TouchableHighlight
-                            onPress={(item) => {
-                              // TODO: Pass in information about this slot into the Mutation, so we can add this character to the timeline slot
+                            onPress={() => {
                               console.log("PRESSED ITEM:")
                               console.log(item)
-
-                              // TODO: this is almost right, character info is there, but we need to know which slot index was clicked
                               saveCharacterToMyTimelines({
                                 variables: {
-                                  character
-                                  // TODO: which slot index???
+                                  character,
+                                  slot: item,
+                                  test: "TEST"
                                 }
                               })
                             }}
@@ -250,11 +247,13 @@ export default class MyTimelinesScreen extends React.Component<
                                 {item.items.map(char => {
                                   // console.log("MY TIMELINE > RENDER > VIEW > MAP > CHAR:")
                                   // console.log(char)
-                                  <Image
-                                    key={char.id}
-                                    style={styles.thumbnail}
-                                    source={{ uri: char.thumbnail }}
-                                  />
+                                  return (
+                                    <Image
+                                      key={char.id}
+                                      style={styles.thumbnail}
+                                      source={{ uri: char.thumbnail }}
+                                    />
+                                  )
                                 })}
                               </View> :
                               <View style={styles.listRowSlot}>

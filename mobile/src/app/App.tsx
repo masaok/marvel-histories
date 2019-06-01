@@ -45,17 +45,17 @@ const client = new ApolloClient({
       myTimelines: [
         {
           __typename: "Timeline",
-          key: "1",
+          key: 0,
           items: []
         },
         {
           __typename: "Timeline",
-          key: "2",
+          key: 1,
           items: []
         },
         {
           __typename: "Timeline",
-          key: "3",
+          key: 2,
           items: []
         },
       ]
@@ -160,49 +160,52 @@ const client = new ApolloClient({
 
           return data;
         },
-        saveCharacterToMyTimelines: (_, { character }, { cache }) => {
-          console.log("TOGGLE > CHARACTER:");
-          console.log(character);
-
-          character.__typename = "Character"; // must give typename (required by Apollo client)
+        saveCharacterToMyTimelines: (_, { character, slot, test }, { cache }) => {
 
           // Query to fetch current data
           const query = gql`
-            query GetSavedCharacterTimelines {
-              savedCharacterTimelines @client {
-                id
-                name
-                thumbnail
+            query GetMyTimelines {
+              myTimelines @client {
+                key
+                items
               }
             }
           `;
 
           // Execute the query
           const current = cache.readQuery({ query });
+          console.log("APP > RESOLVERS > MUTATIONS > SAVE CHAR TO MY TIME > current:")
+          console.log(current)
+
+          // Get the index of the slot (array) to add the new character
+          const slotIndex = slot.key
 
           // Prepare to edit the list
-          let savedCharacterTimelines = current.savedCharacterTimelines;
+          let myTimelines = current.myTimelines;
+          let myTimeline = myTimelines[slotIndex]
+          console.log("APP > RESOLVERS > MUTATIONS > SAVE CHAR TO MY TIME > myTimeline:")
+          console.log(myTimeline)
 
           // Get the index of the incoming character in the list of current data
-          const index = savedCharacterTimelines
+          const index = myTimeline.items
             .map(item => item.id)
             .indexOf(character.id);
 
-          // Either concat or splice the mutable variable prepared above
+          // Concat the character onto the mutable myTimeline variable above
           if (index < 0) {
-            savedCharacterTimelines = savedCharacterTimelines.concat([
+            myTimeline.items = myTimeline.items.concat([
               character
             ]);
-          } else {
-            savedCharacterTimelines.splice(index, 1);
           }
+
+          myTimelines[slotIndex] = myTimeline
 
           // Data must a separate hash (cannot be inline in writeQuery)
           const data = {
-            savedCharacterTimelines
+            myTimelines
           };
 
-          console.log("TOGGLE > DATA:");
+          console.log("APP > RESOLVERS > MUTATIONS > SAVE CHAR TO MY TIME > data:")
           console.log(data);
 
           cache.writeQuery({ query, data });
