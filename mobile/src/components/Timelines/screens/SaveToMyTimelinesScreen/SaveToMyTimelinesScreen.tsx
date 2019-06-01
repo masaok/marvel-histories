@@ -55,8 +55,8 @@ export default class MyTimelinesScreen extends React.Component<
   };
 
   _keyExtractor = item => {
-    console.log("KEY EXTRACTOR > ITEM:")
-    console.log(item)
+    // console.log("KEY EXTRACTOR > ITEM:")
+    // console.log(item)
     return item.key.toString();
   }
 
@@ -73,12 +73,14 @@ export default class MyTimelinesScreen extends React.Component<
     // Character Mock
     const characterMock = {
       id: 1009313,
-      name: "Gambit",
+      name: "Gambit Mock",
       thumbnail: "http://i.annihil.us/u/prod/marvel/i/mg/a/40/52696aa8aee99.jpg",
     }
 
     // Default to incoming param, otherwise use the mock
     const character = characterParam ? characterParam : characterMock;
+    console.log("SAVE TO MY > constructor > CHARACTER:")
+    console.log(character)
 
     const timelinesMock = [
       {
@@ -174,12 +176,12 @@ export default class MyTimelinesScreen extends React.Component<
           return (
             // TODO: Make this mutation save the given Character Timeline to the Timeline Slot
             <Mutation mutation={gql`
-                mutation TOGGLE_SAVE_CHARACTER_TIMELINE($character: Character!) {
-                  toggleSaveCharacterTimeline(character: $character) @client
+                mutation SAVE_CHARACTER_TO_MY_TIMELINES($character: Character!) {
+                  saveCharacterToMyTimelines(character: $character) @client
                 }
               `}
             >
-              {toggleSaveCharacterTimeline => {
+              {saveCharacterToMyTimelines => {
                 console.log("QUERY > MUTATION > SAVED CHAR TIMELINES:")
                 console.log(data.savedCharacterTimelines)
                 console.log("MY TIMELINE > RENDER > TIMELINES:")
@@ -233,6 +235,14 @@ export default class MyTimelinesScreen extends React.Component<
                               // TODO: Pass in information about this slot into the Mutation, so we can add this character to the timeline slot
                               console.log("PRESSED ITEM:")
                               console.log(item)
+
+                              // TODO: this is almost right, character info is there, but we need to know which slot index was clicked
+                              saveCharacterToMyTimelines({
+                                variables: {
+                                  character
+                                  // TODO: which slot index???
+                                }
+                              })
                             }}
                           >
                             {item.items.length > 0 ?

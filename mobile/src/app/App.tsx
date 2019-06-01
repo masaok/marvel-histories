@@ -160,7 +160,7 @@ const client = new ApolloClient({
 
           return data;
         },
-        saveCharacterToMyTimeline: (_, { character }, { cache }) => {
+        saveCharacterToMyTimelines: (_, { character }, { cache }) => {
           console.log("TOGGLE > CHARACTER:");
           console.log(character);
 
