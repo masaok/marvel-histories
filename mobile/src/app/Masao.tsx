@@ -7,11 +7,6 @@ import ApolloClient from './node_modules/apollo-boost';
 
 import { gql } from './node_modules/apollo-boost';
 
-// TODO: when user taps "Like", that data should be saved locally in JSON
-
-// TODO: Allow multiple Likes
-// TODO: https://www.apollographql.com/docs/link/links/state#write-query
-
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
   clientState: {
