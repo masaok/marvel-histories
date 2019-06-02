@@ -10,8 +10,9 @@ import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import { NavigationScreenProp } from 'react-navigation';
 import SubScreenHeader from '../../../shared/Headers/SubScreenHeader';
+import CharacterBadge from '../../../shared/Content/CharacterBadge';
 
-import { Header } from 'react-native-elements';
+import { Header, Badge } from 'react-native-elements';
 
 export interface Props {
   navigation: NavigationScreenProp<{}>;
@@ -221,13 +222,14 @@ export default class MyTimelinesScreen extends React.Component<
                               // console.log("MY TIMELINE > RENDER > VIEW > MAP > CHAR:")
                               // console.log(char)
                               // TODO: This is not updating properly after user adds character to slot
-                              return (
-                                <Image
-                                  key={char.id}
-                                  style={styles.thumbnail}
-                                  source={{ uri: char.thumbnail }}
-                                />
-                              )
+                              // return (
+                              //   <Image
+                              //     key={char.id}
+                              //     style={styles.thumbnail}
+                              //     source={{ uri: char.thumbnail }}
+                              //   />
+                              // )
+                              return <CharacterBadge character={char} />
                             })
                             }
                           </View> :
