@@ -13,6 +13,7 @@ import SubScreenHeader from '../../../shared/Headers/SubScreenHeader';
 
 import { Header } from 'react-native-elements';
 import NavigationService from '../../../../services/NavigationService';
+import CharacterBadge from '../../../shared/Content/CharacterBadge';
 
 export interface Props {
   navigation: NavigationScreenProp<{}>;
@@ -228,15 +229,7 @@ export default class MyTimelinesScreen extends React.Component<
                             {item.items.length > 0 ?
                               <View style={styles.listRowSlot}>
                                 {item.items.map(char => {
-                                  // console.log("MY TIMELINE > RENDER > VIEW > MAP > CHAR:")
-                                  // console.log(char)
-                                  return (
-                                    <Image
-                                      key={char.id}
-                                      style={styles.thumbnail}
-                                      source={{ uri: char.thumbnail }}
-                                    />
-                                  )
+                                  return <CharacterBadge key={char.id} character={char} />
                                 })}
                               </View> :
                               <View style={styles.listRowSlot}>

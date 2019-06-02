@@ -219,9 +219,7 @@ export default class MyTimelinesScreen extends React.Component<
                         return (
                           item.items.length > 0 ? <View style={styles.listRowSlot}>
                             {item.items.map(char => {
-                              return (
-                                <CharacterBadge key={char.id} character={char} />
-                              )
+                              return <CharacterBadge key={char.id} character={char} />
                             })
                             }
                           </View> :
