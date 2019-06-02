@@ -5,7 +5,8 @@ import {
   StyleProp,
   ViewStyle,
   TouchableOpacity,
-  Image
+  Image,
+  ImageSourcePropType
 } from "react-native";
 
 import Scaled from "../../../../assets/Scaled";
@@ -24,7 +25,10 @@ export interface Props {
   onPress?: () => void;
   disabled?: boolean;
   width?: number;
-  character: any;
+  character: {
+    id: number
+    thumbnail: string
+  };
 }
 
 interface State { }
@@ -32,45 +36,8 @@ interface State { }
 export default class CharacterBadge extends React.Component<Props, State> {
   render() {
     const {
-      family,
-      color,
-      alignment,
-      bold,
-      opacity,
-      numLines,
-      onPress,
-      disabled,
-      style,
-      width,
       character
     } = this.props;
-    const text = (
-      <Text
-        style={[
-          {
-            fontFamily: family || "Avenir",
-            color: color || Colors.orange,
-            textAlign: alignment || "center",
-            fontWeight: bold ? "bold" : "normal",
-            opacity,
-            width
-          },
-          disabled ? { color: Colors.grey, opacity: 0.7 } : {}
-        ]}
-        numberOfLines={numLines || 1}
-      >
-        {this.props.children}
-      </Text>
-    );
-    // return (
-    //   <TouchableOpacity
-    //     onPress={onPress}
-    //     disabled={disabled || !onPress}
-    //     style={style}
-    //   >
-    //     {text}
-    //   </TouchableOpacity>
-    // );
     return (
       <Image
         key={character.id}

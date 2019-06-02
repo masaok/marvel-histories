@@ -219,17 +219,9 @@ export default class MyTimelinesScreen extends React.Component<
                         return (
                           item.items.length > 0 ? <View style={styles.listRowSlot}>
                             {item.items.map(char => {
-                              // console.log("MY TIMELINE > RENDER > VIEW > MAP > CHAR:")
-                              // console.log(char)
-                              // TODO: This is not updating properly after user adds character to slot
-                              // return (
-                              //   <Image
-                              //     key={char.id}
-                              //     style={styles.thumbnail}
-                              //     source={{ uri: char.thumbnail }}
-                              //   />
-                              // )
-                              return <CharacterBadge character={char} />
+                              return (
+                                <CharacterBadge key={char.id} character={char} />
+                              )
                             })
                             }
                           </View> :
