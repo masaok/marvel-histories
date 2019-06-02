@@ -221,14 +221,13 @@ export default class MyTimelinesScreen extends React.Component<
                               // console.log("MY TIMELINE > RENDER > VIEW > MAP > CHAR:")
                               // console.log(char)
                               // TODO: This is not updating properly after user adds character to slot
-                              <View>
+                              return (
                                 <Image
                                   key={char.id}
                                   style={styles.thumbnail}
                                   source={{ uri: char.thumbnail }}
                                 />
-                                <Text>{char.name}</Text>
-                              </View>
+                              )
                             })
                             }
                           </View> :
