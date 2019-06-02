@@ -18,13 +18,13 @@ export interface Props {
 }
 
 interface State {
-  text: String,
-  name: String | null,
-  mode: String,
+  text: string,
+  name: string | null,
+  mode: string,
   character: {
-    id: Number,
-    name: String,
-    thumbnail: String,
+    id: number,
+    name: string,
+    thumbnail: string,
   }
 }
 
@@ -141,18 +141,6 @@ export default class CharacterTimelineScreen extends React.Component<
                       }
                       color='#841584'
                     />
-
-                    {/* {!this.props.readOnly && (
-                        <Icon
-                          size={25}
-                          name='edit'
-                          color='lightgrey'
-                          onPress={() =>
-                            NavigationService.navigate('EditRoll', { roll })
-                          }
-                          iconStyle={styles.editIcon}
-                        />
-                      )} */}
 
                     {/* Show a modal of My Timelines, allowing the user to add to a My Timeline */}
                     <Button

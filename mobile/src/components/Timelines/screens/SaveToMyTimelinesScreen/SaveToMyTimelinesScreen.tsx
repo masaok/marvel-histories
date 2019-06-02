@@ -204,25 +204,6 @@ export default class MyTimelinesScreen extends React.Component<
                     <View style={styles.listRow}>
                       <Text style={styles.subtitle}>Character Timelines</Text>
                     </View>
-                    {/* <FlatList
-                      data={timelines}
-                      keyExtractor={this._keyExtractor}
-                      renderItem={({ item }) => {
-                        console.log("MY TIMELINE > RENDER > item:")
-                        console.log(item.items)
-                        return (
-                          <View style={styles.listRowSlot}>
-                            {item.items.map(char => (
-                              <Image
-                                key={char.id}
-                                style={styles.thumbnail}
-                                source={{ uri: char.thumbnail }}
-                              />
-                            ))}
-                          </View>
-                        );
-                      }}
-                    /> */}
                     <FlatList
                       data={data.myTimelines}
                       keyExtractor={this._keyExtractor}
