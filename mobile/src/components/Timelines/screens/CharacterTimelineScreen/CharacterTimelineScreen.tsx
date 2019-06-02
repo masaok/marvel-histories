@@ -81,6 +81,10 @@ export default class CharacterTimelineScreen extends React.Component<
               name
               thumbnail
             }
+            myTimelines @client {
+              key
+              items
+            }
           }
         `}
       >
@@ -150,7 +154,7 @@ export default class CharacterTimelineScreen extends React.Component<
                         />
                       )} */}
 
-                    {/* TODO: Show a modal of My Timelines, allowing the user to select which My Timeline to add it to */}
+                    {/* Show a modal of My Timelines, allowing the user to add to a My Timeline */}
                     <Button
                       onPress={() => {
                         NavigationService.navigate('SaveToMyTimelines', { character })

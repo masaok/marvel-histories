@@ -12,6 +12,7 @@ import { NavigationScreenProp } from 'react-navigation';
 import SubScreenHeader from '../../../shared/Headers/SubScreenHeader';
 
 import { Header } from 'react-native-elements';
+import NavigationService from '../../../../services/NavigationService';
 
 export interface Props {
   navigation: NavigationScreenProp<{}>;
@@ -230,16 +231,17 @@ export default class MyTimelinesScreen extends React.Component<
                         console.log(item.items)
                         return (
                           <TouchableHighlight
-                            onPress={() => {
+                            onPress={async () => {
                               console.log("PRESSED ITEM:")
                               console.log(item)
-                              saveCharacterToMyTimelines({
+                              await saveCharacterToMyTimelines({
                                 variables: {
                                   character,
                                   slot: item,
                                   test: "TEST"
                                 }
                               })
+                              await setTimeout(() => NavigationService.goBack(), 1000) // wait, then close the modal
                             }}
                           >
                             {item.items.length > 0 ?
